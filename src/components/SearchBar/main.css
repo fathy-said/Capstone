@@ -1,0 +1,6 @@
+.search-bar {
+  @apply relative;
+  &-input {
+    @apply w-full h-12 border border-gray-200 rounded-lg outline-0 ps-10 transition-all duration-200 focus:border-blue-450;
+  }
+}

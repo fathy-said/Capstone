@@ -1,0 +1,12 @@
+.box-ImgDialog {
+    display: inline-block;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.box-ImgDialog .cropper-container {
+    width: 100% !important;
+    height: 400px !important;
+}
+.img-preview {
+    overflow: hidden;
+}

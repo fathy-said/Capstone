@@ -1,0 +1,8 @@
+.controls {
+  &-button {
+    @apply w-8 h-8 flex items-center justify-center transition-all duration-200 rounded-full hover:bg-blue-450 hover:text-white;
+    &.delete {
+      @apply hover:bg-red-400;
+    }
+  }
+}

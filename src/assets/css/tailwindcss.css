@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  font-family: IBM Plex Sans Arabic, sans-serif !important;
+}
+
+@layer base {
+  body {
+    @apply font-base text-base bg-gray-100;
+  }
+
+  .app {
+    @apply overflow-x-hidden;
+  }
+
+  .btn {
+    @apply relative py-3 px-10 rounded-lg bg-blue-480 text-white font-medium border border-transparent transition-all duration-300;
+    &-secondary {
+      @apply text-blue-450 border-blue-450/20 bg-blue-100;
+    }
+  }
+
+  a {
+    @apply transition-all duration-200 hover:text-blue-450;
+  }
+}
+
+#nprogress {
+  @apply fixed top-0 start-0 w-full;
+}
+
+#nprogress {
+  z-index: 1000000 !important;
+}
+
+#nprogress .bar {
+  @apply bg-blue-450;
+}
+
+#nprogress .spinner {
+  @apply top-2 lg:top-4 start-2 lg:start-4 right-auto;
+}
+
+#nprogress .spinner-icon {
+  @apply w-6 h-6 border-t-blue-450 border-l-blue-450;
+}

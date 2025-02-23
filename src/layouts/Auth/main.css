@@ -1,0 +1,6 @@
+.authLayout {
+  @apply flex items-center justify-center overflow-y-auto;
+  min-height: 100vh;
+  background: url("/images/auth-bg.webp") no-repeat center center;
+  background-size: cover;
+}

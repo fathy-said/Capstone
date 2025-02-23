@@ -1,0 +1,12 @@
+.prev-button {
+  border-radius: 8px;
+  border: 1px solid var(--Primary-200, #e9d7fe);
+  background: var(--Primary-50, #f9f5ff);
+  color: #6941c6;
+  /* Shadow/xs */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  @apply text-base	 py-[12px] px-[40px]  font-semibold;
+  & div {
+    @apply w-full flex  flex-row-reverse justify-between gap-2 	 items-center leading-[25.6px];
+  }
+}

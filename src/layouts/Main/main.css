@@ -1,0 +1,6 @@
+.app {
+  &-content {
+    @apply transition-all duration-500;
+    min-height: 100vh;
+  }
+}
