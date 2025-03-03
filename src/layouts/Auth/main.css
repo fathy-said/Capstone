@@ -1,6 +1,38 @@
-.authLayout {
+/* .authLayout {
   @apply flex items-center justify-center overflow-y-auto;
   min-height: 100vh;
-  background: url("/images/auth-bg.webp") no-repeat center center;
+  background: url("/images/auth-bg.png") no-repeat center center;
   background-size: cover;
+} */
+
+.authLayout {
+  @apply flex items-center justify-center overflow-y-auto relative;
+  min-height: 100vh;
+  position: relative;
+}
+
+.authLayout::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/images/auth-bg.png") no-repeat center center;
+  background-size: cover;
+  opacity: 0.1;
+  z-index: -1;
+}
+
+.authCard {
+  backdrop-filter: blur(6px) saturate(200%);
+  -webkit-backdrop-filter: blur(6px) saturate(200%);
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+}
+
+.authLayout .authBg {
+  @apply w-full h-full absolute z-[5] flex justify-end items-end;
+}
+
+.authLayout .authBg img {
+  @apply w-full h-full max-w-[400px] object-contain object-center;
 }

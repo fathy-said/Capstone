@@ -155,6 +155,7 @@ export const fetchUser = async () => {
     const {
       data: { record },
     } = await $api.get(`/me`);
+    console.log(record);
     return record;
   } catch (error) {
     console.log(error);
