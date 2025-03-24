@@ -1,22 +1,21 @@
-import {yupResolver} from "@hookform/resolvers/yup";
-import {useEffect, useMemo, useState} from "react";
-import {useForm} from "react-hook-form";
-import {useEffectOnce} from "react-use";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useEffect, useMemo, useState } from "react";
+import { useForm } from "react-hook-form";
+import { useEffectOnce } from "react-use";
 import * as yup from "yup";
-import {AppTable} from "../../components/AppTable/Index";
-import {TableControls} from "../../components/AppTable/components/Controls/Controls";
-import FileDownload from "../../components/FileDownload/Index";
-import {CheckBoxInput} from "../../components/FormInputs/CheckBoxInput/Index";
-import {DateInput} from "../../components/FormInputs/DateInput/Index";
-import {RadioInput} from "../../components/FormInputs/RadioInput/Index";
-import {SelectInput} from "../../components/FormInputs/SelectInput/Index";
-import {TextInput} from "../../components/FormInputs/TextInput/Index";
-import {Uploader} from "../../components/FormInputs/Uploader/Index";
-import {SvgIcon} from "../../components/SvgIcon/Index";
-import {Accordion} from "../../components/Ui/Accordion/Index";
-import {Avatar} from "../../components/Ui/Avatar/Index";
-import {Badge} from "../../components/Ui/Badge/Index";
-import {Button} from "../../components/Ui/Button/Index";
+import { AppTable } from "../../components/AppTable/Index";
+import { TableControls } from "../../components/AppTable/components/Controls/Controls";
+import { CheckBoxInput } from "../../components/FormInputs/CheckBoxInput/Index";
+import { DateInput } from "../../components/FormInputs/DateInput/Index";
+import { RadioInput } from "../../components/FormInputs/RadioInput/Index";
+import { SelectInput } from "../../components/FormInputs/SelectInput/Index";
+import { TextInput } from "../../components/FormInputs/TextInput/Index";
+import { Uploader } from "../../components/FormInputs/Uploader/Index";
+import { SvgIcon } from "../../components/SvgIcon/Index";
+import { Accordion } from "../../components/Ui/Accordion/Index";
+import { Avatar } from "../../components/Ui/Avatar/Index";
+import { Badge } from "../../components/Ui/Badge/Index";
+import { Button } from "../../components/Ui/Button/Index";
 
 export default () => {
   const [posts, setPosts] = useState([]);
@@ -59,7 +58,7 @@ export default () => {
   // Use form
   const {
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
     setValue,
     control,
     reset,
@@ -141,7 +140,7 @@ export default () => {
       setPosts(response);
 
       return response?.map((item) => {
-        return {label: item?.title, value: item?.id};
+        return { label: item?.title, value: item?.id };
       });
     } catch (err) {
       console.log(err);
@@ -392,10 +391,6 @@ export default () => {
           className="mt-10"
           total={40}
           onPaginate={(e) => console.log(e)}
-        />
-        <FileDownload
-          link={"https://images.squarespace-cdn.com/"}
-          name={"images.squarespace-cdn.com"}
         />
       </div>
     </div>
