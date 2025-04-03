@@ -1,0 +1,15 @@
+.accordion-content-enter {
+  @apply max-h-0 overflow-hidden;
+}
+
+.accordion-content-enter-active {
+  @apply opacity-100 max-h-48 transition-all duration-300;
+}
+
+.accordion-content-exit {
+  @apply opacity-0 max-h-48;
+}
+
+.accordion-content-exit-active {
+  @apply max-h-0 transition-all duration-300;
+}

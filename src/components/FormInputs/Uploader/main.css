@@ -1,0 +1,21 @@
+.reactImageUploading {
+    &.invalid {
+        .upload__image-wrapper {
+            @apply border-red-500;
+        }
+        .text-upload {
+            @apply text-red-500;
+        }
+    }
+}
+.chart-shadow {
+    border-radius: 12px !important;
+    border: 1px solid #eaecf0 !important;
+    background: #fff;
+
+    /* Shadow/xs */
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05) !important;
+}
+.uploader .image-item img {
+    object-fit: cover !important;
+}

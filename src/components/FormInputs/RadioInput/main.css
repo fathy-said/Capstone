@@ -1,0 +1,21 @@
+.radioInput {
+  &-input {
+    @apply relative w-6 h-6 border border-gray-200 rounded-full cursor-pointer before:w-3 before:h-3 before:content-[''] before:absolute before:top-1/2 before:start-1/2 rtl:before:translate-x-1/2 before:-translate-x-1/2 before:-translate-y-1/2 before:bg-blue-480 before:rounded-full before:duration-200 before:transition-all before:scale-0;
+  }
+
+  &.hasError {
+    @apply text-red-500;
+    .radioInput {
+      &-input {
+        @apply border-red-500 bg-red-50;
+      }
+      &-label {
+        @apply text-red-500;
+      }
+    }
+  }
+}
+
+[type="radio"]:checked ~ .radioInput-input {
+  @apply bg-blue-100 before:scale-100 border-blue-480;
+}

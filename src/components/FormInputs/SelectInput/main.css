@@ -1,0 +1,38 @@
+.select-input {
+  @apply relative pt-4;
+  &-label {
+    @apply text-sm rounded-lg text-gray-300 bg-white px-2 py-px absolute top-8 start-4 transition-all duration-200 font-normal;
+  }
+  &.is-active {
+    .select-input {
+      &-label {
+        @apply top-0 z-[2];
+      }
+    }
+  }
+
+  &.active-label {
+    .select-input {
+      &-label {
+        @apply top-0 z-[2];
+      }
+    }
+  }
+  &.error {
+    .select-input {
+      &-label {
+        @apply text-red-400;
+      }
+    }
+  }
+  .disabled div {
+    background-color: #eaecf031;
+  }
+  .disabled div div:first-child {
+    background-color: transparent;
+    color: black;
+  }
+  .disabled div div:last-child {
+    display: none;
+  }
+}

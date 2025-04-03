@@ -1,0 +1,112 @@
+.appDate {
+  &-control {
+    @apply relative pt-4 flex flex-col gap-y-4;
+    &-label {
+      @apply absolute top-7 start-4 px-2 py-1 rounded-lg bg-white text-sm duration-200 transition-all;
+    }
+
+    &-input {
+      @apply w-full h-13 rounded-lg px-4 border border-gray-200 hover:border-blue-480 focus:border-blue-500;
+      &-icon {
+        @apply text-gray-300;
+      }
+    }
+
+    &.is-active {
+      .appDate {
+        &-control {
+          &-label {
+            @apply top-0;
+          }
+        }
+      }
+    }
+    &.is-error {
+      .appDate {
+        &-control {
+          &-label {
+            @apply text-red-400;
+          }
+          &-input {
+            @apply border-red-400;
+            &-icon {
+              @apply text-red-400;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .react {
+    &-datepicker {
+      @apply relative border border-white rounded-lg overflow-hidden font-base;
+    }
+    &-datepicker__input-time {
+      &-container {
+        @apply text-center pb-4;
+        input {
+          @apply py-2 px-4 border border-gray-200 rounded-lg;
+        }
+        .react-datepicker-time__caption {
+          @apply font-medium py-2 px-4;
+        }
+      }
+    }
+    &-datepicker__header {
+      @apply py-4 bg-blue-450 text-white border-0 select-none;
+    }
+    &-datepicker-time__header {
+      @apply text-white border-transparent;
+    }
+    &-datepicker__current-month,
+    &-datepicker__day-name {
+      @apply text-white;
+    }
+    &-datepicker__time-container {
+      @apply border-0;
+    }
+    &-datepicker__day {
+      @apply rounded-full !outline-none;
+      &--keyboard-selected {
+        @apply bg-blue-450 text-white;
+      }
+      &--selected {
+        @apply bg-blue-450 font-medium;
+      }
+    }
+    &-datepicker__time-list-item {
+      &--keyboard-selected {
+        @apply bg-blue-450 font-medium;
+      }
+      &--selected {
+        @apply !bg-blue-450 font-medium;
+      }
+    }
+    &-datepicker__day-name {
+      @apply font-medium;
+    }
+    &-datepicker__navigation {
+      &-icon {
+        &::before {
+          @apply border-white;
+        }
+      }
+      @apply top-4 !text-white;
+    }
+    &-datepicker__day--in-range {
+      @apply bg-blue-450 font-medium;
+    }
+    &-datepicker__day--in-selecting-range {
+      @apply bg-blue-450 font-medium;
+    }
+  }
+
+  &.valid {
+    .appDate {
+      &-input {
+        @apply border-gray-200;
+      }
+    }
+  }
+}

@@ -1,0 +1,3 @@
+.header-icon {
+    @apply fill-current text-gray-400 hover:text-blue-600 w-6 h-6 transition-all duration-500 cursor-pointer;
+}

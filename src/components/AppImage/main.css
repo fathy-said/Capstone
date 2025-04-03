@@ -1,0 +1,27 @@
+.appImage {
+  @apply relative w-full h-full;
+  span {
+    @apply absolute top-0 start-0 w-full h-full;
+    img {
+      @apply h-full w-full object-center;
+    }
+  }
+
+  &.contain {
+    img {
+      object-fit: contain;
+    }
+  }
+
+  &.cover {
+    img {
+      object-fit: cover;
+    }
+  }
+
+  &.fill {
+    img {
+      object-fit: fill;
+    }
+  }
+}
