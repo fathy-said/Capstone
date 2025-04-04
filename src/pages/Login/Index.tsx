@@ -1,10 +1,10 @@
-import {yupResolver} from "@hookform/resolvers/yup";
-import {useForm} from "react-hook-form";
-import {TextInput} from "../../components/FormInputs/TextInput/Index";
-import {Button} from "../../components/Ui/Button/Index";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { useForm } from "react-hook-form";
+import { TextInput } from "../../components/FormInputs/TextInput/Index";
+import { Button } from "../../components/Ui/Button/Index";
 import * as yup from "yup";
-import {useAuthHook} from "../../hooks/auth";
-import {Link} from "react-router-dom";
+import { useAuthHook } from "../../hooks/auth";
+import { Link } from "react-router-dom";
 
 export default () => {
   // Yup schema
@@ -21,13 +21,13 @@ export default () => {
   // Use form
   const {
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
     control,
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const {loading, login} = useAuthHook();
+  const { loading, login } = useAuthHook();
 
   // on submit CTA
   const onSubmit = async (inputs) => {
@@ -36,9 +36,7 @@ export default () => {
 
   return (
     <div className="p-6">
-      <h3 className="text-2xl md:text-3xl font-semibold text-center">
-        Login
-      </h3>
+      <h3 className="text-2xl md:text-3xl font-semibold text-center">Login</h3>
       <p className="text-gray-450 text-center mt-4 text-sm md:text-base">
         Welcome! Please enter your credentials
       </p>
@@ -61,7 +59,10 @@ export default () => {
         />
 
         <div className="flex justify-end mt-2">
-          <Link to="/forget-password" className="text-blue-500 hover:text-blue-600 text-sm">
+          <Link
+            to="/forget-password"
+            className="text-blue-500 hover:text-blue-480 text-sm"
+          >
             Forgot Password?
           </Link>
         </div>

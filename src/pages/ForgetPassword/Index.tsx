@@ -15,7 +15,7 @@ interface ForgetPasswordFormInputs {
 export default () => {
   const navigate = useNavigate();
   const { sendPasswordResetCode, loading } = useAuthHook();
-  
+
   // Yup schema
   const schema = yup
     .object({
@@ -23,9 +23,7 @@ export default () => {
         .string()
         .email("Invalid academic email address")
         .required("This field is required"),
-      academicId: yup
-        .string()
-        .required("This field is required"),
+      academicId: yup.string().required("This field is required"),
     })
     .required();
 
@@ -58,9 +56,7 @@ export default () => {
 
   return (
     <div className="max-w-md mx-auto p-6">
-      <h3 className="text-2xl font-semibold text-center">
-        Forgot Password
-      </h3>
+      <h3 className="text-2xl font-semibold text-center">Forgot Password</h3>
       <div className="border-b border-gray-200 my-4"></div>
 
       <form onSubmit={handleSubmit(onSubmit)} className="mt-6">
@@ -86,10 +82,10 @@ export default () => {
           <Button
             type="submit"
             text="Send Code"
-            className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded"
+            className=" text-white py-2 px-4 rounded"
             loading={loading}
           />
-          <Link to="/login" className="text-gray-500 hover:text-gray-700">
+          <Link to="/login" className="text-gray-500 hover:text-blue-480">
             Cancel
           </Link>
         </div>
