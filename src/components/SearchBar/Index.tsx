@@ -12,7 +12,7 @@ type Props = {
 
 export const SearchBar = ({
   className = "",
-  placeholder = "أبحث عن ",
+  placeholder = "Search ...",
 }: Props) => {
   const [searchParams, setSearchParams] = useSearchParams();
 

@@ -7,20 +7,19 @@ import { Accordion } from "../Ui/Accordion/Index";
 import HandlePermissions from "../../hooks/HandlePermissions";
 import { Button } from "../Ui/Button/Index";
 import "./main.css";
+import IconAtom from "../IconAtom/Icon-Atom";
+import { icons } from "lucide-react";
 
 const pages = [
   {
-    isLocked: true,
+    isLocked: false,
     accordion: false,
-    route: "",
-    icon: "file",
-    title: "المشاريع",
+    route: "/archive",
+    icon: "ArchiveRestore",
+    title: "Archive",
     permission: "",
-    subPages: [
-
-    ],
+    subPages: [],
   },
-
 ];
 type Props = {
   className?: string;
@@ -70,6 +69,7 @@ export const SideMenu = ({ className = "" }: Props) => {
               {pages?.length &&
                 pages?.map((page, index) => {
                   if (page?.isLocked) {
+                    console.log("page?.title", page?.title);
                     return (
                       <div className=" w-full h-fit" key={index}>
                         {handleLockComponent(page?.title)}
@@ -93,26 +93,27 @@ export const SideMenu = ({ className = "" }: Props) => {
                         headerClassName="rounded-md hover:bg-gray-100 hover:text-blue-600"
                       >
                         {" "}
-                        {page?.subPages?.length && page?.subPages?.map((sub:any, index) => {
-                          if (sub?.isLocked) {
-                            return (
-                              <div className=" w-full h-fit" key={index}>
-                                {handleLockComponent(sub?.title)}
-                              </div>
-                            );
-                          } else {
-                            return (
-                              <div className=" w-full h-fit" key={index}>
-                                <HandlePageRoute
-                                  route={sub?.route}
-                                  icon={sub?.icon}
-                                  title={sub?.title}
-                                  permission={sub?.permission}
-                                />
-                              </div>
-                            );
-                          }
-                        })}
+                        {page?.subPages?.length &&
+                          page?.subPages?.map((sub: any, index) => {
+                            if (sub?.isLocked) {
+                              return (
+                                <div className=" w-full h-fit" key={index}>
+                                  {handleLockComponent(sub?.title)}
+                                </div>
+                              );
+                            } else {
+                              return (
+                                <div className=" w-full h-fit" key={index}>
+                                  <HandlePageRoute
+                                    route={sub?.route}
+                                    icon={sub?.icon}
+                                    title={sub?.title}
+                                    permission={sub?.permission}
+                                  />
+                                </div>
+                              );
+                            }
+                          })}
                       </Accordion>
                     );
                   } else {
@@ -128,8 +129,6 @@ export const SideMenu = ({ className = "" }: Props) => {
                     );
                   }
                 })}
-
-
             </div>
           </div>
           <div className="py-4 border-t  w-full">
@@ -157,16 +156,24 @@ interface RouteProps {
   permission: string;
 }
 const HandlePageRoute = ({ route, icon, title, permission }: RouteProps) => {
+  const iconName = icon as keyof typeof icons;
   return HandlePermissions({
     object: true,
     permissionName: permission,
   }) ? (
     <NavLink to={route} className="sidemenu-navigation">
-      <SvgIcon name={icon} className="fill-current w-6 h-6" />
+      <SvgIcon name={iconName} className="fill-current w-6 h-6" />
       {title}{" "}
     </NavLink>
   ) : (
-    handleLockComponent(title)
+    <>
+      {/* handleLockComponent(title) */}
+
+      <NavLink to={route} className="sidemenu-navigation">
+        <IconAtom name={iconName} className=" w-6 h-6" />
+        {title}{" "}
+      </NavLink>
+    </>
   );
 };
 

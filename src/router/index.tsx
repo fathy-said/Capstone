@@ -14,6 +14,7 @@ const ResetPasswordPage = lazy(() => import("../pages/ResetPassword/Index"));
 
 // Design system page (contains all common components)
 const DesignSystemPage = lazy(() => import("../pages/DesignSystem/Index"));
+import ArchiveRoutes from "../pages/Archive/route.tsx";
 
 /**
  * Routes
@@ -49,6 +50,10 @@ const routesTree = () => {
         {
           path: "design-system",
           element: <DesignSystemPage />,
+        },
+        {
+          path: "archive",
+          children: ArchiveRoutes,
         },
       ],
     },

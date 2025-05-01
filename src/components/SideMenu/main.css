@@ -9,10 +9,10 @@ aside.open {
 }
 
 .sidemenu-navigation {
-  @apply relative gap-x-3 flex text-base text-blue-500 font-semibold items-center rounded-md hover:bg-gray-100 hover:text-blue-600 p-3;
+  @apply relative gap-x-3 flex text-base text-blue-450 font-semibold items-center rounded-md hover:bg-blue-200  p-3;
 }
 .sidemenu-navigation.active {
-  @apply relative gap-x-3 flex text-base font-semibold items-center rounded-md bg-gray-150 text-blue-600 p-3;
+  @apply relative gap-x-3 flex text-base font-semibold items-center text-white rounded-md bg-blue-450  p-3;
 }
 .sidemenu-navigation.block {
   @apply relative gap-x-3 cursor-not-allowed flex justify-between  text-base font-semibold items-center rounded-md  text-gray-250 p-3;

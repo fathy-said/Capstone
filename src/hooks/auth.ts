@@ -20,7 +20,7 @@ export const useAuthHook = () => {
       const {
         data: { access_token: token, user },
       } = await $api.post(`/login`, inputs);
-
+      console.log("access_token", token);
       localStorage.setItem("token", token);
 
       // Set user , token for store

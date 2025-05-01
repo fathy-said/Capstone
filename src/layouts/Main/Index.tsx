@@ -20,7 +20,9 @@ export const MainLayout = () => {
         <SideMenu />
         <div className={`app-content ${sideMenuIsOpen ? "lg:ms-80" : "ms-0"}`}>
           <Header />
-          <Outlet />
+          <div className="bg-blue-100 w-full h-full min-h-screen ">
+            <Outlet />
+          </div>
         </div>
       </RouteSuspended>
     </div>
