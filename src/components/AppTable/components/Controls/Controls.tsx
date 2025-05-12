@@ -64,7 +64,7 @@ export const TableControls = ({
       {isView ? (
         <Tooltip
           TextClassName="!w-fit text-nowrap"
-          text={"عرض التفاصيل"}
+          text={"view details"}
           children={
             <NavLink
               // to={`/${baseUrl}/view/${value?.id}`}
@@ -79,7 +79,7 @@ export const TableControls = ({
       {isDownload ? (
         <Tooltip
           TextClassName="!w-fit text-nowrap"
-          text={"تحميل"}
+          text={"download"}
           children={
             <a
               target="_blank"
@@ -96,7 +96,7 @@ export const TableControls = ({
       {isEdit ? (
         <Tooltip
           TextClassName="!w-fit text-nowrap"
-          text={"تعديل"}
+          text={"edit"}
           children={
             <NavLink
               to={`/${baseUrl}/edit/${value?.id}`}
@@ -110,7 +110,7 @@ export const TableControls = ({
       {isEditAction ? (
         <Tooltip
           TextClassName="!w-fit text-nowrap"
-          text={"تعديل"}
+          text={"edit"}
           children={
             <button
               type="button"
@@ -126,7 +126,7 @@ export const TableControls = ({
       {isSteps ? (
         <Tooltip
           TextClassName="!w-fit text-nowrap"
-          text={"استكمال انشاء المشروع"}
+          text={"create"}
           children={
             <NavLink
               to={`/project/create/step-${value?.number}/create/${value?.id}`}
@@ -145,7 +145,7 @@ export const TableControls = ({
       {isRestore ? (
         <Tooltip
           TextClassName="!w-fit text-nowrap"
-          text={"استرجاع"}
+          text={"restore"}
           children={
             <button
               type="button"
