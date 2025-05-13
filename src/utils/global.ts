@@ -221,3 +221,5 @@ export const splitPhoneNumber = (value) => {
 
 export const MainTax: number = 15;
 
+type userTypes = "user" | "admin" | "Super_Visor";
+export const userType: userTypes = "user";

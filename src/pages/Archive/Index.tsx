@@ -44,7 +44,7 @@ const ArchiveItem = ({ data }: { data: any }) => {
         </p>
       </div>
       <Button
-        onClick={() => navigate(`/archive/${data}`)}
+        onClick={() => navigate(`${data}`)}
         text="See More"
         className="ml-auto"
       />
