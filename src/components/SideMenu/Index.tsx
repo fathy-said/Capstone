@@ -14,7 +14,7 @@ const pages = [
   {
     isLocked: false,
     accordion: false,
-    route: "/user/archive",
+    route: "/student/archive",
     icon: "ArchiveRestore",
     title: "Archive",
     permission: "",
@@ -23,7 +23,7 @@ const pages = [
   {
     isLocked: false,
     accordion: false,
-    route: "/user/teams",
+    route: "/student/teams",
     icon: "Users",
     title: "Teams",
     permission: "",

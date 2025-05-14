@@ -53,12 +53,12 @@ const routesTree = () => {
           element: <DesignSystemPage />,
         },
         {
-          path: "/:teamId/archive",
+          path: ":userType/archive",
           children: ArchiveRoutes,
         },
         {
-          path: "/:teamId/teams",
-          children: TeamsRoutes,
+          path: "/:userType/teams",
+          children: TeamsRoutes(),
         },
       ],
     },
