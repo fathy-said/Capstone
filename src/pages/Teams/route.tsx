@@ -1,9 +1,7 @@
-import { lazy } from "react";
 import { userTypes } from "../../utils/global.ts";
-// import { useLocation } from "react-router-dom";
 
-const UserPage = lazy(() => import("./Student/StudentTeams.tsx"));
-
+import studentRoute from "./Student/student-route";
+import superVisorRoute from "./SuperVisor/superVisor-route";
 function Route() {
   // const location = useLocation();
   const getFirstSlug = () => {
@@ -11,19 +9,10 @@ function Route() {
     const pathArray = path.split("/");
     return pathArray[1];
   };
-  console.log("getFirstSlug", getFirstSlug());
+
   const teamsRoute =
-    (getFirstSlug() as userTypes) === "student" ? <UserPage /> : <>test</>;
-  return [
-    {
-      children: [
-        {
-          index: true,
-          element: teamsRoute,
-        },
-      ],
-    },
-  ];
+    (getFirstSlug() as userTypes) == "student" ? studentRoute : superVisorRoute;
+  return teamsRoute;
 }
 
 export default Route;
