@@ -17,6 +17,7 @@ const DesignSystemPage = lazy(() => import("../pages/DesignSystem/Index"));
 import ArchiveRoutes from "../pages/Archive/route.tsx";
 import ProjectRoutes from "../pages/Project/route.tsx";
 import TeamsRoutes from "../pages/Teams/route.tsx";
+import DashboardRoutes from "../pages/Dashboard/route.tsx";
 
 /**
  * Routes
@@ -44,7 +45,7 @@ const routesTree = () => {
           index: true,
           element: (
             <PermissionPage permissionName={"view_analytics"}>
-              <HomePage />{" "}
+              <HomePage />
             </PermissionPage>
           ),
         },
@@ -63,6 +64,10 @@ const routesTree = () => {
         {
           path: "/:userType/teams",
           children: TeamsRoutes(),
+        },
+        {
+          path: "/:userType/dashboard",
+          children: DashboardRoutes(),
         },
       ],
     },

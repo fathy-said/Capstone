@@ -11,6 +11,15 @@ import IconAtom from "../IconAtom/Icon-Atom";
 import { icons } from "lucide-react";
 
 const pages = [
+      {
+    isLocked: false,
+    accordion: false,
+    route: "/student/dashboard",
+    icon: "LayoutDashboard",
+    title: "Dashboard",
+    permission: "",
+    subPages: [],
+  },
     {
     isLocked: false,
     accordion: false,

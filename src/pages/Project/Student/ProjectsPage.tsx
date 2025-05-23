@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CreateTeamPanel from '../../../components/CreateTeamPanel';
 import { useUtils } from '../../../store/utils';
+import SeeMorePanel from './SeeMorePanel';
 
 interface ProjectCardProps {
   id: number;
@@ -176,238 +177,35 @@ const ProjectCard: React.FC<ProjectCardProps> = ({ id, userName, projectName, de
   );
 };
 
-// TeamRequestPanel Component
-const TeamRequestPanel: React.FC<{ 
-  isOpen: boolean; 
-  onClose: () => void; 
-  team: {
-    id: number;
-    teamName: string;
-    teamLeader: string;
-    description: string;
-    logo: string;
-  } | null;
-}> = ({ isOpen, onClose, team }) => {
-  const [isPanelVisible, setIsPanelVisible] = useState(false);
-  const { sideMenuIsOpen } = useUtils();
-
-  useEffect(() => {
-    if (isOpen) {
-      setIsPanelVisible(true);
-      // Prevent body scrolling when panel is open
-      document.body.style.overflow = 'hidden';
-    } else {
-      // Delay hiding the panel to allow animation to complete
-      const timer = setTimeout(() => {
-        setIsPanelVisible(false);
-        // Restore body scrolling
-        document.body.style.overflow = 'auto';
-      }, 400); // Increased timeout for smoother transition
-      return () => clearTimeout(timer);
-    }
-  }, [isOpen]);
-
-  if (!isPanelVisible && !isOpen || !team) return null;
-
-  // Mock data for the supervisor and team members
-  const supervisor = {
-    name: "Dr. Ahmed Mohamed El-syed Mahmoud",
-    university: "Damanhur University",
-    faculty: "Faculty of Computers and Information",
-    department: "Information Technology department",
-    qualifications: [
-      {
-        degree: "Ph.D. degree in information systems, Faculty of Computers and Information, Mansoura University, Jan. 2022",
-      },
-      {
-        degree: "Master degree of Information Systems, Faculty of Computers and Informatics, Mansura University, Jan. 2018",
-      },
-      {
-        degree: "The graduation project target was: Analysis and design database to Urology Hospital, Mansura (Excellent grade)",
-      }
-    ],
-    avatar: "https://randomuser.me/api/portraits/men/35.jpg"
-  };
-
-  const teamMembers = [
-    { id: "6641CS", name: "Mostafa Ahmed", email: "@gmail.com", section: "CS", role: "Frontend" },
-    { id: "8242IT", name: "Nour Mohamed", email: "@gmail.com", section: "IT", role: "UI/UX" },
-    { id: "6641CS", name: "Ahmed Mohamed", email: "@gmail.com", section: "CS", role: "Data analyst" },
-    { id: "7242IT", name: "Mohamed Ali", email: "@gmail.com", section: "IT", role: "Backend" },
-    { id: "541CS", name: "Ahmed Alaa", email: "@gmail.com", section: "CS", role: "Flutter" },
-    { id: "541CS", name: "Ahmed Alaa", email: "@gmail.com", section: "CS", role: "Flutter" },
-    { id: "6641CS", name: "Mostafa Ahmed", email: "@gmail.com", section: "CS", role: "Frontend" },
-    { id: "8242IT", name: "Nour Mohamed", email: "@gmail.com", section: "IT", role: "UI/UX" },
-    { id: "6641CS", name: "Ahmed Mohamed", email: "@gmail.com", section: "CS", role: "Data analyst" },
-    { id: "7242IT", name: "Mohamed Ali", email: "@gmail.com", section: "IT", role: "Backend" }
-  ];
-
-  return (
-    <>
-      <div 
-        className="fixed bottom-0 right-0 z-50 transition-all duration-400 ease-in-out"
-        style={{ 
-          top: '72px',
-          left: sideMenuIsOpen ? '320px' : '0', // Width of sidebar when open (320px) or closed (0)
-          opacity: isOpen ? '1' : '0',
-          pointerEvents: isOpen ? 'auto' : 'none',
-          transitionDelay: isOpen ? '0ms' : '200ms' // Delay opacity change when closing
-        }}
-      >
-        <div 
-          className="absolute inset-0 bg-[#cfe0f3] transform transition-all duration-400 ease-in-out"
-          style={{ 
-            height: 'calc(100vh - 72px)', // Set height to viewport minus header
-            transform: isOpen ? 'translateX(0)' : 'translateX(100%)',
-            transitionDelay: isOpen ? '0ms' : '0ms' // No delay for transform when closing
-          }}
-        >
-          {/* Navigation button in top right */}
-          <div className="absolute top-4 right-4 z-50">
-            <button 
-              onClick={onClose}
-              className="text-black hover:text-[#42A5F5] bg-white rounded-full p-2 shadow-md z-10 transition-all duration-200"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-          
-          {/* Single scrollable container for all content */}
-          <div className="h-full overflow-y-auto">
-            <div className="p-8">
-              {/* Top spacing area */}
-              <div className="h-16"></div>
-              
-              {/* Main white card with project details */}
-              <div className="bg-white rounded-lg mb-12 p-8 shadow-sm">
-                <div className="flex items-start">
-                  <div className="w-40 h-40 flex items-center justify-center mr-8">
-                    <img 
-                      src={team.logo} 
-                      alt={team.teamName}
-                      className="w-32 h-32 object-contain"
-                    />
-                  </div>
-                  <div className="flex-1 pt-4">
-                    <h2 className="text-3xl font-bold text-black mb-6">{team.teamName}</h2>
-                    <p className="text-gray-600 text-lg">
-                      {team.description}
-                    </p>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Supervisor section */}
-              <div className="mb-10">
-                <h3 className="text-2xl font-bold text-[#0047AB] mb-5 pl-2">Supervisor</h3>
-                <div className="bg-white rounded-lg p-8 shadow-sm">
-                  <div className="flex items-start">
-                    <img 
-                      src={supervisor.avatar} 
-                      alt={supervisor.name} 
-                      className="w-24 h-24 rounded-full object-cover mr-8"
-                    />
-                    <div>
-                      <h4 className="text-2xl font-bold text-black mb-2">{supervisor.name}</h4>
-                      <p className="text-blue-800 mb-1">{supervisor.university}</p>
-                      <p className="text-blue-800 mb-1">{supervisor.faculty}</p>
-                      <p className="text-blue-800">{supervisor.department}</p>
-                    </div>
-                  </div>
-                  
-                  <div className="mt-8">
-                    <h5 className="font-bold text-lg mb-3">Academic Qualification</h5>
-                    <ul className="space-y-2">
-                      {supervisor.qualifications.map((qual, index) => (
-                        <li key={index} className="text-gray-700">{qual.degree}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Team members */}
-              <div className="mb-10">
-                <h3 className="text-2xl font-bold text-[#0047AB] mb-5 pl-2">Team Members</h3>
-                <div className="bg-white rounded-lg overflow-hidden shadow-sm">
-                  <div className="overflow-x-auto">
-                    <table className="min-w-full">
-                      <thead className="bg-white border-b">
-                        <tr>
-                          <th className="px-6 py-4 text-left text-sm font-medium text-[#0047AB] uppercase">ID</th>
-                          <th className="px-6 py-4 text-left text-sm font-medium text-[#0047AB] uppercase">Name</th>
-                          <th className="px-6 py-4 text-left text-sm font-medium text-[#0047AB] uppercase">Email</th>
-                          <th className="px-6 py-4 text-left text-sm font-medium text-[#0047AB] uppercase">Section</th>
-                          <th className="px-6 py-4 text-left text-sm font-medium text-[#0047AB] uppercase">Role</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {teamMembers.map((member, index) => (
-                          <tr key={index} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
-                            <td className="px-6 py-3 whitespace-nowrap text-base font-medium text-gray-900">{member.id}</td>
-                            <td className="px-6 py-3 whitespace-nowrap text-base text-gray-900">{member.name}</td>
-                            <td className="px-6 py-3 whitespace-nowrap text-base text-gray-500">..................{member.email}</td>
-                            <td className="px-6 py-3 whitespace-nowrap text-base text-gray-500">{member.section}</td>
-                            <td className="px-6 py-3 whitespace-nowrap text-base text-gray-500">{member.role}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Bottom spacing area */}
-              <div className="h-10"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
 
 // Team card component
 const TeamCard: React.FC<{ id: number; teamName: string; teamLeader: string; description: string; logo: string }> = ({ 
   id, teamName, teamLeader, description, logo 
 }) => {
-  const [isRequestPanelOpen, setIsRequestPanelOpen] = useState(false);
+  const navigate = useNavigate();
   
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6 w-full">
-      <div className="flex flex-col">
-        <div className="flex items-center mb-3">
-          <img 
-            src={logo} 
-            alt={teamName} 
-            className="w-20 h-20 mr-4 object-contain"
-          />
-          <div className="flex flex-col">
-            <h3 className="text-xl font-bold text-gray-800">{teamName}</h3>
-            <h4 className="text-md text-[#A1A3AB]">Team leader: {teamLeader}</h4>
-          </div>
-        </div>
-        
-        <p className="text-[#A1A3AB] mb-4">{description}</p>
-        
-        <div className="flex justify-end">
-          <button 
-            className="bg-[#42A5F5] hover:bg-[#3994e4] text-white px-6 py-2 rounded-md transition duration-200"
-            onClick={() => setIsRequestPanelOpen(true)}
-          >
-            Request
-          </button>
+    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+      <div className="flex items-center mb-4">
+        <img 
+          src={logo} 
+          alt={teamName} 
+          className="w-16 h-16 rounded-full object-cover mr-4"
+        />
+        <div>
+          <h2 className="text-xl font-bold text-gray-800">{teamName}</h2>
+          <p className="text-gray-600 mt-1">{teamLeader}</p>
+          <p className="text-gray-600 mt-2">{description}</p>
         </div>
       </div>
-      
-      {/* Team Request Panel */}
-      <TeamRequestPanel
-        isOpen={isRequestPanelOpen}
-        onClose={() => setIsRequestPanelOpen(false)}
-        team={{ id, teamName, teamLeader, description, logo }}
-      />
+      <div className="flex justify-end w-full mt-2">
+        <button 
+          onClick={() => navigate(`/student/projects/seemore/${id}`)}
+          className="bg-[#42A5F5] hover:bg-[#3994e4] text-white px-6 py-2 rounded-md transition duration-200"
+        >
+          See More
+        </button>
+      </div>
     </div>
   );
 };
@@ -530,9 +328,9 @@ const MemberSearchPanel: React.FC<{
 const StudentProjectsPage: React.FC = () => {
   console.log("StudentProjectsPage component rendered"); // Debug log
   const location = useLocation();
+  const navigate = useNavigate();
   const isProjectsPage = location.pathname === '/projects' || location.pathname === '/student/projects' || location.pathname === '/project';
   const [activeTab, setActiveTab] = useState<'collage' | 'teams'>('collage');
-  const [isCreateTeamPanelOpen, setIsCreateTeamPanelOpen] = useState(false);
   const projectsContainerRef = useRef<HTMLDivElement>(null);
 
   // Mock projects data
@@ -640,15 +438,8 @@ const StudentProjectsPage: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-[#F5F7FB] p-6">
-      {/* Create Team Panel */}
-      <CreateTeamPanel 
-        isOpen={isCreateTeamPanelOpen}
-        onClose={() => setIsCreateTeamPanelOpen(false)}
-        onSubmit={handleCreateTeam}
-      />
-      
       {/* Header with tabs and buttons */}
-      <div className="flex flex-col md:flex-row justify-between items-center mb-6 gap-4">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
         <div className="flex space-x-2">
           <button 
             onClick={() => setActiveTab('collage')}
@@ -686,7 +477,7 @@ const StudentProjectsPage: React.FC = () => {
         </div>
         
         <button 
-          onClick={() => setIsCreateTeamPanelOpen(true)}
+          onClick={() => navigate('/student/projects/createteam')}
           className="bg-[#42A5F5] hover:bg-[#3994e4] text-white px-4 py-2 rounded-md whitespace-nowrap"
         >
           Create Team
