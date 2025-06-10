@@ -17,6 +17,24 @@ type Props = {
 };
 
 const pages = [
+      {
+    isLocked: false,
+    accordion: false,
+    route: "/student/dashboard",
+    icon: "LayoutDashboard",
+    title: "Dashboard",
+    permission: "",
+    subPages: [],
+  },
+    {
+    isLocked: false,
+    accordion: false,
+    route: "/student/projects",
+    icon: "FolderKanban",
+    title: "projects",
+    permission: "",
+    subPages: [],
+  },
   {
     isLocked: false,
     accordion: false,
