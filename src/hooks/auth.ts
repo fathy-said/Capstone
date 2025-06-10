@@ -137,7 +137,7 @@ export const useLogout = () => {
       setToken(null);
       setUser(null);
       setPermissions([]);
-      await $api.post("/logout");
+      await $api.post("logout");
       localStorage.removeItem("token");
       navigate("/");
     } catch (err) {
