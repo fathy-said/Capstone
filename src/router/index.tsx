@@ -41,8 +41,8 @@ const routesTree = () => {
       errorElement: <PageErrorElement />,
       children: [
         {
-          index: true,
-          element: <HomePage />,
+          path: "/",
+          children: DashboardRoutes(),
         },
         {
           path: "design-system",
@@ -59,10 +59,6 @@ const routesTree = () => {
         {
           path: ":userType/teams",
           children: TeamsRoutes(),
-        },
-        {
-          path: "/:userType/dashboard",
-          children: DashboardRoutes(),
         },
       ],
     },
