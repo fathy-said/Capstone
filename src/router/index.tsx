@@ -25,7 +25,6 @@ import TeamsRoutes from "../pages/Teams/route.tsx";
  * Error Page
  */
 import { PageErrorElement } from "../components/Errors/Page/Index";
-import PermissionPage from "../components/PermissionPage/PermissionPage";
 
 const routesTree = () => {
   return createBrowserRouter([
@@ -41,11 +40,7 @@ const routesTree = () => {
       children: [
         {
           index: true,
-          element: (
-            <PermissionPage permissionName={"view_analytics"}>
-              <HomePage />{" "}
-            </PermissionPage>
-          ),
+          element: <HomePage />,
         },
 
         {
@@ -57,7 +52,7 @@ const routesTree = () => {
           children: ArchiveRoutes,
         },
         {
-          path: "/:userType/teams",
+          path: ":userType/teams",
           children: TeamsRoutes(),
         },
       ],

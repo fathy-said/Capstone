@@ -1,14 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { AppTable } from "../../../components/AppTable/Index";
 import IconAtom from "../../../components/IconAtom/Icon-Atom";
-import { SvgIcon } from "../../../components/SvgIcon/Index";
 import { Avatar } from "../../../components/Ui/Avatar/Index";
 import { Button } from "../../../components/Ui/Button/Index";
 import { TableControls } from "../../../components/AppTable/components/Controls/Controls";
 import { useNavigate } from "react-router-dom";
+import NewProjectForm from "./components/NewProjectForm";
 
 function StudentTeams() {
   const navigate = useNavigate();
+  const [newProjectModal, setNewProjectModal] = useState(false);
+
   return (
     <div className="container py-20 min-h-screen flex flex-col justify-start items-center gap-8">
       <div className="flex justify-start w-full items-center gap-4">
@@ -26,6 +28,7 @@ function StudentTeams() {
         <h4 className="text-xl font-normal text-center">My teams page</h4>
         <div className="flex justify-center items-center gap-4">
           <Button
+            onClick={() => setNewProjectModal(true)}
             text={
               <>
                 <IconAtom name="Plus" className="w-5 h-5" /> New idea
@@ -71,6 +74,7 @@ function StudentTeams() {
         <h4 className="text-lg font-semibold">Team Members</h4>
         <MemberTable />
       </div>
+      <NewProjectForm state={newProjectModal} setState={setNewProjectModal} />
     </div>
   );
 }
@@ -162,7 +166,7 @@ function MemberTable() {
         columns={columns}
         loading={false}
         className="mt-10 w-full"
-        total={40}
+        total={posts?.length}
         onPaginate={(e) => console.log(e)}
       />
     </>

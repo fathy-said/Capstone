@@ -9,6 +9,12 @@ import { Button } from "../Ui/Button/Index";
 import "./main.css";
 import IconAtom from "../IconAtom/Icon-Atom";
 import { icons } from "lucide-react";
+import { useAuth } from "../../store/auth";
+import { useMemo } from "react";
+
+type Props = {
+  className?: string;
+};
 
 const pages = [
   {
@@ -30,11 +36,10 @@ const pages = [
     subPages: [],
   },
 ];
-type Props = {
-  className?: string;
-};
-
 export const SideMenu = ({ className = "" }: Props) => {
+  // const {
+  //   user: { user_type },
+  // } = useAuth();
   const { sideMenuToggle } = useUtils();
   const { sideMenuIsOpen } = useUtils(
     ({ sideMenuIsOpen }: UseUtilsInterface) => ({
@@ -49,6 +54,28 @@ export const SideMenu = ({ className = "" }: Props) => {
     await logout();
   };
 
+  // const pages = useMemo(() => {
+  //   return [
+  //     {
+  //       isLocked: false,
+  //       accordion: false,
+  //       route: `/${user_type}/archive`,
+  //       icon: "ArchiveRestore",
+  //       title: "Archive",
+  //       permission: "",
+  //       subPages: [],
+  //     },
+  //     {
+  //       isLocked: false,
+  //       accordion: false,
+  //       route: `/${user_type}/teams`,
+  //       icon: "Users",
+  //       title: "Teams",
+  //       permission: "",
+  //       subPages: [],
+  //     },
+  //   ];
+  // }, [user_type]);
   return (
     <>
       <div

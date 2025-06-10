@@ -1,7 +1,7 @@
 import { lazy } from "react";
 
 const Page = lazy(() => import("./SuperVisorTeams"));
-const TasksPage = lazy(() => import("./SuperVisorTasks.tsx"));
+const TasksPage = lazy(() => import("./Details/SuperVisorTasks.tsx"));
 
 export default [
   {
@@ -11,7 +11,7 @@ export default [
         element: <Page />,
       },
       {
-        path: "tasks",
+        path: ":teamId/details/tasks",
         element: <TasksPage />,
       },
     ],

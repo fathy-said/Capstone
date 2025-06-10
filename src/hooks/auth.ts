@@ -17,19 +17,22 @@ export const useAuthHook = () => {
     try {
       setLoading(true);
 
-      const {
-        data: { access_token: token, user },
-      } = await $api.post(`/login`, inputs);
-      console.log("access_token", token);
-      localStorage.setItem("token", token);
+      const { data } = await $api.post(`/login`, inputs);
+      console.log("data", data);
+      if (!data?.status) {
+        toast.error(data?.msg);
+        return;
+      }
 
+      localStorage.setItem("token", data?.user?.api_token);
+      localStorage.setItem("user_type", data?.user?.user_type);
       // Set user , token for store
-      setUser(user);
-      setPermissions([
-        ...user?.permissions,
-        ...(user?.roles?.[0]?.permissions || []),
-      ]);
-      setToken(token);
+      setUser(data?.user);
+      // setPermissions([
+      //   ...data?.user?.permissions,
+      //   ...(data?.user?.roles?.[0]?.permissions || []),
+      // ]);
+      setToken(data?.user?.user_token);
 
       navigate("/");
     } catch (error: any) {
@@ -152,13 +155,9 @@ export const useLogout = () => {
  */
 export const fetchUser = async () => {
   try {
-    const {
-      data: { record },
-    } = await $api.get(`/me`);
-    console.log(record);
-    return record;
+    const { data } = await $api.post(`/profile`, {});
+    return data?.userProfile;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };

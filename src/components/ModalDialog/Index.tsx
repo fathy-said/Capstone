@@ -1,9 +1,9 @@
 import { ReactNode, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Transition } from "react-transition-group";
-import { SvgIcon } from "../SvgIcon/Index";
 
 import "./main.css";
+import IconAtom from "../IconAtom/Icon-Atom";
 
 interface Props {
   children?: ReactNode;
@@ -77,20 +77,17 @@ export const ModalDialog = ({
             <div
               className={`${contentClassName} modalDialog-content relative z-[2] bg-white rounded-2xl ${padding}`}
             >
-              <div>
+              <div className="flex justify-between items-center mb-4">
                 {title ? <h3 className="fs-lg">{title}</h3> : null}
 
                 {!disableClose ? (
                   <>
                     {closeButton && (
                       <button
-                        className="w-8 h-8 flex items-center justify-center duration-150 transition-all bg-brown-200 rounded-lg text-brown-500 hover:text-brown-300"
+                        className="w-8 h-8 flex items-center justify-center duration-150 transition-all bg-blue-100 rounded-lg text-blue-400 "
                         onClick={onCloseAction}
                       >
-                        <SvgIcon
-                          name="close-square"
-                          className="w-5 h-5 fill-current"
-                        />
+                        <IconAtom name="X" className="w-5 h-5 fill-current" />
                       </button>
                     )}
                   </>

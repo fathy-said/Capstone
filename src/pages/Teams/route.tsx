@@ -2,17 +2,15 @@ import { userTypes } from "../../utils/global.ts";
 
 import studentRoute from "./Student/student-route";
 import superVisorRoute from "./SuperVisor/superVisor-route";
-function Route() {
-  // const location = useLocation();
-  const getFirstSlug = () => {
-    const path = window.location.pathname;
-    const pathArray = path.split("/");
-    return pathArray[1];
-  };
-
+function route() {
+  const userType: userTypes = localStorage.getItem("user_type") as userTypes;
   const teamsRoute =
-    (getFirstSlug() as userTypes) == "student" ? studentRoute : superVisorRoute;
+    userType == "student"
+      ? studentRoute
+      : userType == "super_visor"
+      ? superVisorRoute
+      : studentRoute;
   return teamsRoute;
 }
 
-export default Route;
+export default route;
