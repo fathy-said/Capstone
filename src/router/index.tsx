@@ -7,7 +7,6 @@ import { MainLayout } from "../layouts/Main/Index";
 /**
  * Pages
  */
-const HomePage = lazy(() => import("../pages/Home/Index"));
 const LoginPage = lazy(() => import("../pages/Login/Index"));
 const ForgetPasswordPage = lazy(() => import("../pages/ForgetPassword/Index"));
 const ResetPasswordPage = lazy(() => import("../pages/ResetPassword/Index"));

@@ -117,12 +117,67 @@ export const useAuthHook = () => {
     }
   };
 
+  /**
+   * Reset password with token
+   */
+  const resetPassword = async ({ token, newPassword }: { token: string; newPassword: string }) => {
+    try {
+      setLoading(true);
+
+      const { data } = await $api.post(`/reset-password`, {
+        token,
+        password: newPassword,
+      });
+
+      if (!data?.status) {
+        toast.error(data?.msg || 'Password reset failed');
+        return;
+      }
+
+      toast.success('Password reset successfully');
+      return data;
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'Password reset failed');
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * Send password reset code
+   */
+  const sendPasswordResetCode = async ({ academicMail, academicId }: { academicMail: string; academicId: string }) => {
+    try {
+      setLoading(true);
+
+      const { data } = await $api.post(`/forgot-password`, {
+        email: academicMail,
+        academic_id: academicId,
+      });
+
+      if (!data?.status) {
+        toast.error(data?.msg || 'Failed to send reset code');
+        return;
+      }
+
+      return data;
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'Failed to send reset code');
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     login,
     verify,
     resendOtp,
     me,
+    resetPassword,
+    sendPasswordResetCode,
   };
 };
 
