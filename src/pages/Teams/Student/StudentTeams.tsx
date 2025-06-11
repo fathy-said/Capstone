@@ -82,6 +82,7 @@ function StudentTeams() {
 export default StudentTeams;
 
 const StudentTeamsItem = ({ data }: { data: any }) => {
+  console.log(data);
   return (
     <div className="h-full w-full min-h-fit  flex flex-col justify-start items-start gap-4 rounded-lg py-8 px-8 bg-white">
       <div className="flex w-full justify-start items-center gap-6">
