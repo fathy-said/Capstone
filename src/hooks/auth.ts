@@ -18,22 +18,17 @@ export const useAuthHook = () => {
       setLoading(true);
 
       const { data } = await $api.post(`/login`, inputs);
-      console.log("data", data);
+      console.log("login", data);
       if (!data?.status) {
         toast.error(data?.msg);
         return;
       }
 
-      localStorage.setItem("token", data?.user?.api_token);
-      localStorage.setItem("user_type", data?.user?.user_type);
+      localStorage.setItem("token", data?.data?.token);
+      localStorage.setItem("user_type", data?.data?.user?.user_type);
       // Set user , token for store
-      setUser(data?.user);
-      // setPermissions([
-      //   ...data?.user?.permissions,
-      //   ...(data?.user?.roles?.[0]?.permissions || []),
-      // ]);
-      setToken(data?.user?.user_token);
-
+      setUser(data?.data?.user);
+      setToken(data?.data?.token);
       navigate("/");
     } catch (error: any) {
       toast.error(error?.response?.data?.message);
@@ -120,7 +115,13 @@ export const useAuthHook = () => {
   /**
    * Reset password with token
    */
-  const resetPassword = async ({ token, newPassword }: { token: string; newPassword: string }) => {
+  const resetPassword = async ({
+    token,
+    newPassword,
+  }: {
+    token: string;
+    newPassword: string;
+  }) => {
     try {
       setLoading(true);
 
@@ -130,14 +131,14 @@ export const useAuthHook = () => {
       });
 
       if (!data?.status) {
-        toast.error(data?.msg || 'Password reset failed');
+        toast.error(data?.msg || "Password reset failed");
         return;
       }
 
-      toast.success('Password reset successfully');
+      toast.success("Password reset successfully");
       return data;
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || 'Password reset failed');
+      toast.error(error?.response?.data?.message || "Password reset failed");
       throw error;
     } finally {
       setLoading(false);
@@ -147,7 +148,13 @@ export const useAuthHook = () => {
   /**
    * Send password reset code
    */
-  const sendPasswordResetCode = async ({ academicMail, academicId }: { academicMail: string; academicId: string }) => {
+  const sendPasswordResetCode = async ({
+    academicMail,
+    academicId,
+  }: {
+    academicMail: string;
+    academicId: string;
+  }) => {
     try {
       setLoading(true);
 
@@ -157,13 +164,15 @@ export const useAuthHook = () => {
       });
 
       if (!data?.status) {
-        toast.error(data?.msg || 'Failed to send reset code');
+        toast.error(data?.msg || "Failed to send reset code");
         return;
       }
 
       return data;
     } catch (error: any) {
-      toast.error(error?.response?.data?.message || 'Failed to send reset code');
+      toast.error(
+        error?.response?.data?.message || "Failed to send reset code"
+      );
       throw error;
     } finally {
       setLoading(false);
@@ -210,7 +219,7 @@ export const useLogout = () => {
  */
 export const fetchUser = async () => {
   try {
-    const { data } = await $api.post(`/profile`, {});
+    const { data } = await $api.get(`/profile`);
     return data?.userProfile;
   } catch (error) {
     throw error;
