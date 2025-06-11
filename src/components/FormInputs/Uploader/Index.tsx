@@ -6,10 +6,10 @@ import { useUpdateEffect } from "react-use";
 import { v4 as uuidv4 } from "uuid";
 import { AppImage } from "../../AppImage/Index";
 import CropperModalBox from "../../CropperModalBox/Index";
-import { SvgIcon } from "../../SvgIcon/Index";
 
 import { getNameFromPath } from "../../../utils/transform";
 import "./main.css";
+import IconAtom from "../../IconAtom/Icon-Atom";
 interface Props {
   placeholder: string | React.ReactNode;
   acceptType: string[];
@@ -161,8 +161,8 @@ export const Uploader = forwardRef<HTMLDivElement, Props>(
                                         />
                                       ) : (
                                         <div>
-                                          <SvgIcon
-                                            name="document-upload"
+                                          <IconAtom
+                                            name="Upload"
                                             className="w-[32px] h-[32px] !text-gray-500 "
                                           />
                                         </div>
@@ -182,9 +182,9 @@ export const Uploader = forwardRef<HTMLDivElement, Props>(
                                           download
                                           className="group cursor-pointer transition-[0.3s] hover:bg-gray-100  p-2	 rounded-full"
                                         >
-                                          <SvgIcon
-                                            name="document-download"
-                                            className="w-[25px] group-hover:text-blue-480  h-[25px]  "
+                                          <IconAtom
+                                            name="Download"
+                                            className="w-5 h-5 group-hover:text-blue-480  "
                                           />
                                         </a>
                                       )}
@@ -213,15 +213,15 @@ export const Uploader = forwardRef<HTMLDivElement, Props>(
                                 <button
                                   type="button"
                                   style={{
-                                    background: isDragging ? "#7F56D9" : "",
+                                    background: isDragging ? "#2E90FA" : "",
                                   }}
                                   className={`bg-${
                                     isDragging ? "blue-450" : ""
                                   }   p-[10px] !rounded-[8px]  chart-shadow `}
                                 >
-                                  <SvgIcon
-                                    name="upload-cloud-02"
-                                    className={`w-[30px] h-[30px] ${
+                                  <IconAtom
+                                    name="Upload"
+                                    className={`w-5 h-5 ${
                                       isDragging
                                         ? "text-gray-100"
                                         : "text-gray-450"
@@ -231,10 +231,10 @@ export const Uploader = forwardRef<HTMLDivElement, Props>(
                                 <div>
                                   <bdi className=" flex justify-center items-center gap-[4px] w-fit">
                                     <h4 className="text-sm text-upload    font-semibold 	 text-blue-480 leading-[19.6px]">
-                                      {` أضغط هنا لرفع ${targetNameShow}`}
+                                      {` click to upload ${targetNameShow}`}
                                     </h4>
                                     <h4 className="text-sm font-normal text-gray-400 leading-[19.6px]">
-                                      أو قم بسحبه هنا
+                                      or drag and drop
                                     </h4>
                                   </bdi>
                                   <h4 className="text-xs font-normal text-gray-40 leading-[16.8px] mt-[4px]">
@@ -269,9 +269,9 @@ export const Uploader = forwardRef<HTMLDivElement, Props>(
                                         />
                                       ) : (
                                         <div>
-                                          <SvgIcon
-                                            name="document-upload"
-                                            className="w-[32px] h-[32px] !text-gray-500 "
+                                          <IconAtom
+                                            name="Upload"
+                                            className="w-5 h-5 !text-gray-500 "
                                           />
                                         </div>
                                       )}
@@ -290,9 +290,9 @@ export const Uploader = forwardRef<HTMLDivElement, Props>(
                                           download
                                           className="group cursor-pointer transition-[0.3s] hover:bg-gray-100  p-2	 rounded-full"
                                         >
-                                          <SvgIcon
-                                            name="document-download"
-                                            className="w-[25px] group-hover:text-blue-480  h-[25px]  "
+                                          <IconAtom
+                                            name="Download"
+                                            className="w-5 h-5 group-hover:text-blue-480  "
                                           />
                                         </a>
                                       )}
@@ -304,9 +304,9 @@ export const Uploader = forwardRef<HTMLDivElement, Props>(
                                             onImageRemove(index);
                                           }}
                                         >
-                                          <SvgIcon
-                                            name="trash"
-                                            className="w-[25px] h-[25px] text-gray-500 group-hover:text-blue-480 "
+                                          <IconAtom
+                                            name="Trash"
+                                            className="w-5 h-5 text-gray-500 group-hover:text-blue-480 "
                                           />
                                         </button>
                                       )}
@@ -324,9 +324,9 @@ export const Uploader = forwardRef<HTMLDivElement, Props>(
                                       className="  gap-2 p-2	  w-full  text-base	    font-semibold 	 bg-blue-450  text-white leading-[25.6px]   py-[10px] px-[18px] text-center  rounded-[8px]  !flex justify-center items-center "
                                     >
                                       <span>تغيير حجم الشعار</span>{" "}
-                                      <SvgIcon
-                                        name="maximize-4"
-                                        className="w-[25px] text-white  h-[25px]"
+                                      <IconAtom
+                                        name="Maximize"
+                                        className="w-5 h-5 text-white"
                                       />
                                     </button>
                                   )}

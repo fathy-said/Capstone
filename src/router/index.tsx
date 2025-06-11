@@ -7,7 +7,6 @@ import { MainLayout } from "../layouts/Main/Index";
 /**
  * Pages
  */
-const HomePage = lazy(() => import("../pages/Home/Index"));
 const LoginPage = lazy(() => import("../pages/Login/Index"));
 const ForgetPasswordPage = lazy(() => import("../pages/ForgetPassword/Index"));
 const ResetPasswordPage = lazy(() => import("../pages/ResetPassword/Index"));
@@ -15,6 +14,9 @@ const ResetPasswordPage = lazy(() => import("../pages/ResetPassword/Index"));
 // Design system page (contains all common components)
 const DesignSystemPage = lazy(() => import("../pages/DesignSystem/Index"));
 import ArchiveRoutes from "../pages/Archive/route.tsx";
+import ProjectRoutes from "../pages/Project/route.tsx";
+import TeamsRoutes from "../pages/Teams/route.tsx";
+import DashboardRoutes from "../pages/Dashboard/route.tsx";
 
 /**
  * Routes
@@ -24,7 +26,6 @@ import ArchiveRoutes from "../pages/Archive/route.tsx";
  * Error Page
  */
 import { PageErrorElement } from "../components/Errors/Page/Index";
-import PermissionPage from "../components/PermissionPage/PermissionPage";
 
 const routesTree = () => {
   return createBrowserRouter([
@@ -39,21 +40,24 @@ const routesTree = () => {
       errorElement: <PageErrorElement />,
       children: [
         {
-          index: true,
-          element: (
-            <PermissionPage permissionName={"view_analytics"}>
-              <HomePage />{" "}
-            </PermissionPage>
-          ),
+          path: "/",
+          children: DashboardRoutes(),
         },
-
         {
           path: "design-system",
           element: <DesignSystemPage />,
         },
         {
-          path: "archive",
+          path: "/:userType/archive",
           children: ArchiveRoutes,
+        },
+        {
+          path: "/:userType/projects",
+          children: ProjectRoutes(),
+        },
+        {
+          path: ":userType/teams",
+          children: TeamsRoutes(),
         },
       ],
     },

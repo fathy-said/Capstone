@@ -9,23 +9,56 @@ import { Button } from "../Ui/Button/Index";
 import "./main.css";
 import IconAtom from "../IconAtom/Icon-Atom";
 import { icons } from "lucide-react";
+import { useAuth } from "../../store/auth";
+import { useMemo } from "react";
+import { userTypes } from "../../utils/global";
 
-const pages = [
-  {
-    isLocked: false,
-    accordion: false,
-    route: "/archive",
-    icon: "ArchiveRestore",
-    title: "Archive",
-    permission: "",
-    subPages: [],
-  },
-];
 type Props = {
   className?: string;
 };
 
+// const pages = [
+//   {
+//     isLocked: false,
+//     accordion: false,
+//     route: "/student/dashboard",
+//     icon: "LayoutDashboard",
+//     title: "Dashboard",
+//     permission: "",
+//     subPages: [],
+//   },
+//   {
+//     isLocked: false,
+//     accordion: false,
+//     route: "/student/projects",
+//     icon: "FolderKanban",
+//     title: "projects",
+//     permission: "",
+//     subPages: [],
+//   },
+//   {
+//     isLocked: false,
+//     accordion: false,
+//     route: "/student/archive",
+//     icon: "ArchiveRestore",
+//     title: "Archive",
+//     permission: "",
+//     subPages: [],
+//   },
+//   {
+//     isLocked: false,
+//     accordion: false,
+//     route: "/student/teams",
+//     icon: "Users",
+//     title: "Teams",
+//     permission: "",
+//     subPages: [],
+//   },
+// ];
 export const SideMenu = ({ className = "" }: Props) => {
+  const { user } = useAuth();
+  const user_type = user?.user_type as userTypes;
+
   const { sideMenuToggle } = useUtils();
   const { sideMenuIsOpen } = useUtils(
     ({ sideMenuIsOpen }: UseUtilsInterface) => ({
@@ -39,6 +72,47 @@ export const SideMenu = ({ className = "" }: Props) => {
   const onLogoutAction = async () => {
     await logout();
   };
+
+  const pages = useMemo(() => {
+    return [
+      {
+        isLocked: false,
+        accordion: false,
+        route: `/`,
+        icon: "LayoutDashboard",
+        title: "Dashboard",
+        permission: "",
+        subPages: [],
+      },
+      {
+        isLocked: false,
+        accordion: false,
+        route: `/${user_type}/projects`,
+        icon: "FolderKanban",
+        title: "projects",
+        permission: "",
+        subPages: [],
+      },
+      {
+        isLocked: false,
+        accordion: false,
+        route: `/${user_type}/archive`,
+        icon: "ArchiveRestore",
+        title: "Archive",
+        permission: "",
+        subPages: [],
+      },
+      {
+        isLocked: false,
+        accordion: false,
+        route: `/${user_type}/teams`,
+        icon: "Users",
+        title: "Teams",
+        permission: "",
+        subPages: [],
+      },
+    ];
+  }, [user_type]);
 
   return (
     <>
@@ -62,10 +136,6 @@ export const SideMenu = ({ className = "" }: Props) => {
         <div className=" h-full  flex justify-between items-center flex-col flex-1">
           <div className="overflow-y-auto max-h-full flex-1 w-full">
             <div className="flex flex-col py-4 space-y-1">
-              <NavLink to="/" className="sidemenu-navigation">
-                <SvgIcon name="bar-chart" className="fill-current w-6 h-6" />
-                نظرة عامة
-              </NavLink>
               {pages?.length &&
                 pages?.map((page, index) => {
                   if (page?.isLocked) {

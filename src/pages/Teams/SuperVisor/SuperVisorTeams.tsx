@@ -1,26 +1,26 @@
 import { useNavigate } from "react-router-dom";
-import { SearchBar } from "../../components/SearchBar/Index";
-import { Avatar } from "../../components/Ui/Avatar/Index";
-import { Button } from "../../components/Ui/Button/Index";
+import { SearchBar } from "../../../components/SearchBar/Index";
+import { Avatar } from "../../../components/Ui/Avatar/Index";
+import { Button } from "../../../components/Ui/Button/Index";
 
-function Archive() {
+function SuperVisorTeams() {
   return (
     <div className="container py-20 min-h-screen flex flex-col justify-start items-center gap-8">
       <div className="flex justify-between items-center py-5 px-8 rounded-lg w-full bg-white">
-        <h4 className="text-xl font-normal text-center">Archive page</h4>
+        <h4 className="text-xl font-normal text-center">Teams page</h4>
 
         <SearchBar />
       </div>
       {Array.from({ length: 10 }).map((_, index) => (
-        <ArchiveItem key={index} data={index} />
+        <SuperVisorItem key={index} data={index} />
       ))}
     </div>
   );
 }
 
-export default Archive;
+export default SuperVisorTeams;
 
-const ArchiveItem = ({ data }: { data: any }) => {
+const SuperVisorItem = ({ data }: { data: any }) => {
   const navigate = useNavigate();
   return (
     <div className="h-full w-full min-h-fit  flex flex-col justify-start items-start gap-4 rounded-lg py-8 px-8 bg-white">
@@ -44,7 +44,7 @@ const ArchiveItem = ({ data }: { data: any }) => {
         </p>
       </div>
       <Button
-        onClick={() => navigate(`${data}`)}
+        onClick={() => navigate(`${data}/details/tasks`)}
         text="See More"
         className="ml-auto"
       />

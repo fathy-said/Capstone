@@ -17,19 +17,22 @@ export const useAuthHook = () => {
     try {
       setLoading(true);
 
-      const {
-        data: { access_token: token, user },
-      } = await $api.post(`/login`, inputs);
-      console.log("access_token", token);
-      localStorage.setItem("token", token);
+      const { data } = await $api.post(`/login`, inputs);
+      console.log("data", data);
+      if (!data?.status) {
+        toast.error(data?.msg);
+        return;
+      }
 
+      localStorage.setItem("token", data?.user?.api_token);
+      localStorage.setItem("user_type", data?.user?.user_type);
       // Set user , token for store
-      setUser(user);
-      setPermissions([
-        ...user?.permissions,
-        ...(user?.roles?.[0]?.permissions || []),
-      ]);
-      setToken(token);
+      setUser(data?.user);
+      // setPermissions([
+      //   ...data?.user?.permissions,
+      //   ...(data?.user?.roles?.[0]?.permissions || []),
+      // ]);
+      setToken(data?.user?.user_token);
 
       navigate("/");
     } catch (error: any) {
@@ -114,12 +117,67 @@ export const useAuthHook = () => {
     }
   };
 
+  /**
+   * Reset password with token
+   */
+  const resetPassword = async ({ token, newPassword }: { token: string; newPassword: string }) => {
+    try {
+      setLoading(true);
+
+      const { data } = await $api.post(`/reset-password`, {
+        token,
+        password: newPassword,
+      });
+
+      if (!data?.status) {
+        toast.error(data?.msg || 'Password reset failed');
+        return;
+      }
+
+      toast.success('Password reset successfully');
+      return data;
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'Password reset failed');
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  /**
+   * Send password reset code
+   */
+  const sendPasswordResetCode = async ({ academicMail, academicId }: { academicMail: string; academicId: string }) => {
+    try {
+      setLoading(true);
+
+      const { data } = await $api.post(`/forgot-password`, {
+        email: academicMail,
+        academic_id: academicId,
+      });
+
+      if (!data?.status) {
+        toast.error(data?.msg || 'Failed to send reset code');
+        return;
+      }
+
+      return data;
+    } catch (error: any) {
+      toast.error(error?.response?.data?.message || 'Failed to send reset code');
+      throw error;
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     loading,
     login,
     verify,
     resendOtp,
     me,
+    resetPassword,
+    sendPasswordResetCode,
   };
 };
 
@@ -134,7 +192,7 @@ export const useLogout = () => {
       setToken(null);
       setUser(null);
       setPermissions([]);
-      await $api.post("/logout");
+      await $api.post("logout");
       localStorage.removeItem("token");
       navigate("/");
     } catch (err) {
@@ -152,13 +210,9 @@ export const useLogout = () => {
  */
 export const fetchUser = async () => {
   try {
-    const {
-      data: { record },
-    } = await $api.get(`/me`);
-    console.log(record);
-    return record;
+    const { data } = await $api.post(`/profile`, {});
+    return data?.userProfile;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
