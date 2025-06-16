@@ -6,6 +6,8 @@ interface Task {
   title: string;
   description: string;
   dueDate: string;
+  startDate: string;
+  endDate: string;
   assignedUsers?: { id: number; avatar: string }[];
   status:
     | "my-task"
@@ -18,7 +20,7 @@ interface Task {
 
 interface TaskBoardProps {
   tasks: Task[];
-  renderTaskCard: (task: Task) => React.ReactNode;
+  renderTaskCard: (task: Task, isUpdate?: boolean) => React.ReactNode;
   addTaskButton?: React.ReactNode;
 }
 
@@ -36,7 +38,6 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
     "in-review": tasks.filter((task) => task.status === "in-review"),
     completed: tasks.filter((task) => task.status === "completed"),
   };
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-4 h-full">
       <TaskColumn

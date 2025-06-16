@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 interface TaskFormProps {
   onSubmit: (task: {
     title: string;
-    dueDate: string;
+    dueDate?: string;
+    startDate: string;
+    endDate: string;
     description: string;
     attachments?: File[];
   }) => void;
@@ -12,15 +16,25 @@ interface TaskFormProps {
 
 const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, onCancel }) => {
   const [title, setTitle] = useState('');
-  const [dueDate, setDueDate] = useState('');
+  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [endDate, setEndDate] = useState<Date | null>(null);
   const [description, setDescription] = useState('');
   const [attachments, setAttachments] = useState<File[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Format dates to string in the format dd/mm/yyyy
+    const formatDate = (date: Date | null): string => {
+      if (!date) return '';
+      return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+    };
+    
     onSubmit({
       title,
-      dueDate,
+      dueDate: endDate ? formatDate(endDate) : '', // For backward compatibility
+      startDate: formatDate(startDate),
+      endDate: endDate ? formatDate(endDate) : formatDate(startDate),
       description,
       attachments,
     });
@@ -51,17 +65,40 @@ const TaskForm: React.FC<TaskFormProps> = ({ onSubmit, onCancel }) => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="dueDate" className="block text-sm font-medium text-gray-700 mb-1">
-              Due Date
+            <label
+              htmlFor="dateRange"
+              className="block text-sm font-medium text-gray-700 mb-1"
+            >
+              Date Range
             </label>
-            <input
-              type="date"
-              id="dueDate"
-              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={dueDate}
-              onChange={(e) => setDueDate(e.target.value)}
-              required
-            />
+            <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex-1">
+                <label className="block text-xs text-gray-500 mb-1">Start Date</label>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date: Date) => setStartDate(date)}
+                  selectsStart
+                  startDate={startDate}
+                  endDate={endDate}
+                  dateFormat="dd/MM/yyyy"
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  required
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block text-xs text-gray-500 mb-1">End Date</label>
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date: Date) => setEndDate(date)}
+                  selectsEnd
+                  startDate={startDate}
+                  endDate={endDate}
+                  minDate={startDate}
+                  dateFormat="dd/MM/yyyy"
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
           </div>
 
           <div className="mb-4">

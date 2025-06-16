@@ -11,6 +11,8 @@ interface Task {
   title: string;
   description: string;
   dueDate: string;
+  startDate: string;
+  endDate: string;
   assignedUsers?: { id: number; avatar: string }[];
   status:
     | "my-task"
@@ -36,11 +38,15 @@ function TasksPage() {
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       status: "my-task",
     },
     {
       id: "2",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -54,6 +60,8 @@ function TasksPage() {
     {
       id: "3",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -67,6 +75,8 @@ function TasksPage() {
     {
       id: "4",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -80,6 +90,8 @@ function TasksPage() {
     {
       id: "5",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -93,6 +105,8 @@ function TasksPage() {
     {
       id: "6",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -106,6 +120,8 @@ function TasksPage() {
     {
       id: "7",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -114,6 +130,8 @@ function TasksPage() {
     {
       id: "8",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -127,6 +145,8 @@ function TasksPage() {
     {
       id: "9",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -146,6 +166,7 @@ function TasksPage() {
       setSelectedTask(task);
     }
   };
+
   const handleUpdateDetails = (taskId: string) => {
     // Find the task with the given ID
     const task = tasks.find((task) => task.id === taskId);
@@ -163,6 +184,8 @@ function TasksPage() {
       title?: string;
       description?: string;
       dueDate?: string;
+      startDate?: string;
+      endDate?: string;
       status?:
         | "my-task"
         | "prof-task"
@@ -208,7 +231,9 @@ function TasksPage() {
 
   const handleSubmitTask = (newTask: {
     title: string;
-    dueDate: string;
+    dueDate?: string;
+    startDate: string;
+    endDate: string;
     description: string;
     attachments?: File[];
   }) => {
@@ -220,7 +245,9 @@ function TasksPage() {
       id: taskId,
       title: newTask.title,
       description: newTask.description,
-      dueDate: newTask.dueDate,
+      dueDate: newTask.dueDate || newTask.endDate, // For backward compatibility
+      startDate: newTask.startDate,
+      endDate: newTask.endDate,
       status: "my-task", // New tasks start in 'my-task' column
     };
 
@@ -241,16 +268,19 @@ function TasksPage() {
     </button>
   );
 
-  const renderTaskCard = (task: Task) => (
+  const renderTaskCard = (task: Task, isUpdate: boolean = true) => (
     <TaskCard
       key={task.id}
       title={task.title}
       description={task.description}
       dueDate={task.dueDate}
+      startDate={task.startDate}
+      endDate={task.endDate}
       assignedUsers={task.assignedUsers}
       status={task.status}
       onMoreDetails={() => handleMoreDetails(task.id)}
       onUpload={() => handleUpload(task.id)}
+      isUpdate={isUpdate}
       onReview={() => handleReview(task.id)}
       onUpdate={() => handleUpdateDetails(task.id)} // Open the task details modal for updating
     />
@@ -291,6 +321,7 @@ function TasksPage() {
             setSelectedTask(null);
           }}
           onUpdate={(taskId, updatedTask) => {
+            console.log("Updated task:", updatedTask);
             handleUpdateTask(taskId, updatedTask);
             setIsEditing(false);
           }}

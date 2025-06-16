@@ -24,11 +24,11 @@ export const useAuthHook = () => {
         return;
       }
 
-      localStorage.setItem("token", data?.data?.token);
-      localStorage.setItem("user_type", data?.data?.user?.user_type);
+      localStorage.setItem("token", data?.user?.access_token);
+      localStorage.setItem("user_type", data?.user?.user?.user_type);
       // Set user , token for store
-      setUser(data?.data?.user);
-      setToken(data?.data?.token);
+      setUser(data?.user);
+      setToken(data?.user?.user_type);
       navigate("/");
     } catch (error: any) {
       toast.error(error?.response?.data?.message);
@@ -220,7 +220,7 @@ export const useLogout = () => {
 export const fetchUser = async () => {
   try {
     const { data } = await $api.get(`/profile`);
-    return data?.userProfile;
+    return data?.user;
   } catch (error) {
     throw error;
   }

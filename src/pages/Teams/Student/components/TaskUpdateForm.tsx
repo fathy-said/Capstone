@@ -1,4 +1,8 @@
 import React, { useState } from "react";
+import { userTypes } from "../../../../utils/global";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import { parse, isValid } from "date-fns";
 
 interface TaskUpdateFormProps {
   task: {
@@ -15,6 +19,8 @@ interface TaskUpdateFormProps {
       | "in-review"
       | "completed";
     attachments?: string[];
+    startDate?: string;
+    endDate?: string;
   };
   onClose: () => void;
   onUpdate: (
@@ -23,6 +29,8 @@ interface TaskUpdateFormProps {
       title?: string;
       description?: string;
       dueDate?: string;
+      startDate?: string;
+      endDate?: string;
       status?:
         | "my-task"
         | "prof-task"
@@ -41,14 +49,65 @@ const TaskUpdateForm: React.FC<TaskUpdateFormProps> = ({
 }) => {
   const [editedTitle, setEditedTitle] = useState(task.title);
   const [editedDescription, setEditedDescription] = useState(task.description);
-  const [editedDueDate, setEditedDueDate] = useState(task.dueDate);
-  const [editedStatus, setEditedStatus] = useState(task.status);
+  // Helper function to parse date strings in different formats
+  const parseDate = (dateString: string | undefined): Date | null => {
+    if (!dateString) return null;
+    
+    try {
+      // Check if the date is in DD/MM/YYYY format
+      if (dateString.includes("/")) {
+        const parts = dateString.split("/");
+        
+        // Check if it's DD/MM/YYYY format
+        if (parts.length === 3 && parts[0].length === 2 && parseInt(parts[0]) <= 31) {
+          const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+          if (isValid(parsedDate)) return parsedDate;
+        }
+        
+        // Check if it's YYYY/MM/DD format
+        if (parts.length === 3 && parts[0].length === 4) {
+          const parsedDate = parse(dateString, "yyyy/MM/dd", new Date());
+          if (isValid(parsedDate)) return parsedDate;
+        }
+      }
+      
+      // Try standard date format
+      const date = new Date(dateString);
+      if (isValid(date)) return date;
+      
+      return new Date(); // Fallback to current date if all parsing attempts fail
+    } catch (error) {
+      console.error("Date parsing error:", error);
+      return new Date(); // Fallback to current date if parsing fails
+    }
+  };
 
+  const [editedStartDate, setEditedStartDate] = useState<Date | null>(
+    task.startDate ? parseDate(task.startDate) : new Date()
+  );
+  
+  const [editedEndDate, setEditedEndDate] = useState<Date | null>(
+    task.endDate ? parseDate(task.endDate) : null
+  );
+  const [editedStatus, setEditedStatus] = useState(task.status);
+  const userType = localStorage.getItem("user_type") as userTypes;
   const handleSaveChanges = () => {
+    // Format dates to string in the format dd/mm/yyyy
+    const formatDate = (date: Date | null): string | undefined => {
+      if (!date) return undefined;
+      return `${date.getDate().toString().padStart(2, "0")}/${(
+        date.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}/${date.getFullYear()}`;
+    };
+
     onUpdate(task.id, {
       title: editedTitle,
       description: editedDescription,
-      dueDate: editedDueDate,
+      dueDate: formatDate(editedEndDate) || task.dueDate, // For backward compatibility
+      startDate: formatDate(editedStartDate),
+      endDate: formatDate(editedEndDate),
       status: editedStatus,
     });
     onClose();
@@ -112,6 +171,9 @@ const TaskUpdateForm: React.FC<TaskUpdateFormProps> = ({
               onChange={(e) => setEditedStatus(e.target.value as any)}
             >
               <option value="to-do">To Do</option>
+              {userType === "super_visor" && (
+                <option value="prof-task">Prof Task</option>
+              )}
               <option value="in-progress">In Progress</option>
               <option value="in-review">In Review</option>
               <option value="completed">Completed</option>
@@ -120,23 +182,42 @@ const TaskUpdateForm: React.FC<TaskUpdateFormProps> = ({
 
           <div className="mb-4">
             <label
-              htmlFor="dueDate"
+              htmlFor="dateRange"
               className="block text-sm font-medium text-gray-700 mb-1"
             >
-              Due Date
+              Date Range
             </label>
-            <input
-              type="date"
-              id="dueDate"
-              className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={editedDueDate.split("/").reverse().join("-")} // Convert date from yyyy/mm/dd to yyyy-mm-dd
-              onChange={(e) => {
-                const date = e.target.value;
-                // Convert date from yyyy-mm-dd to yyyy/mm/dd
-                const formattedDate = date.split("-").join("/");
-                setEditedDueDate(formattedDate);
-              }}
-            />
+            <div className="flex flex-col sm:flex-row gap-2">
+              <div className="flex-1 flex flex-col items-stretch justify-start">
+                <label className="block text-xs text-gray-500 mb-1">
+                  Start Date
+                </label>
+                <DatePicker
+                  selected={editedStartDate}
+                  onChange={(date: Date) => setEditedStartDate(date)}
+                  selectsStart
+                  startDate={editedStartDate}
+                  endDate={editedEndDate}
+                  dateFormat="dd/MM/yyyy"
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+              <div className="flex-1 flex flex-col items-stretch justify-start">
+                <label className="block text-xs text-gray-500 mb-1 w-full">
+                  End Date
+                </label>
+                <DatePicker
+                  selected={editedEndDate}
+                  onChange={(date: Date) => setEditedEndDate(date)}
+                  selectsEnd
+                  startDate={editedStartDate}
+                  endDate={editedEndDate}
+                  minDate={editedStartDate}
+                  dateFormat="dd/MM/yyyy"
+                  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </div>
           </div>
 
           <div className="mb-6">
