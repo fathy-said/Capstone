@@ -7,7 +7,7 @@ function route() {
   const teamsRoute =
     userType == "student"
       ? studentRoute
-      : userType == "super_visor"
+      : userType == "supervisor"
       ? superVisorRoute
       : studentRoute;
   return teamsRoute;

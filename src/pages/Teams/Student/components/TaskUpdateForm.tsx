@@ -52,29 +52,33 @@ const TaskUpdateForm: React.FC<TaskUpdateFormProps> = ({
   // Helper function to parse date strings in different formats
   const parseDate = (dateString: string | undefined): Date | null => {
     if (!dateString) return null;
-    
+
     try {
       // Check if the date is in DD/MM/YYYY format
       if (dateString.includes("/")) {
         const parts = dateString.split("/");
-        
+
         // Check if it's DD/MM/YYYY format
-        if (parts.length === 3 && parts[0].length === 2 && parseInt(parts[0]) <= 31) {
+        if (
+          parts.length === 3 &&
+          parts[0].length === 2 &&
+          parseInt(parts[0]) <= 31
+        ) {
           const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
           if (isValid(parsedDate)) return parsedDate;
         }
-        
+
         // Check if it's YYYY/MM/DD format
         if (parts.length === 3 && parts[0].length === 4) {
           const parsedDate = parse(dateString, "yyyy/MM/dd", new Date());
           if (isValid(parsedDate)) return parsedDate;
         }
       }
-      
+
       // Try standard date format
       const date = new Date(dateString);
       if (isValid(date)) return date;
-      
+
       return new Date(); // Fallback to current date if all parsing attempts fail
     } catch (error) {
       console.error("Date parsing error:", error);
@@ -85,7 +89,7 @@ const TaskUpdateForm: React.FC<TaskUpdateFormProps> = ({
   const [editedStartDate, setEditedStartDate] = useState<Date | null>(
     task.startDate ? parseDate(task.startDate) : new Date()
   );
-  
+
   const [editedEndDate, setEditedEndDate] = useState<Date | null>(
     task.endDate ? parseDate(task.endDate) : null
   );
@@ -171,7 +175,7 @@ const TaskUpdateForm: React.FC<TaskUpdateFormProps> = ({
               onChange={(e) => setEditedStatus(e.target.value as any)}
             >
               <option value="to-do">To Do</option>
-              {userType === "super_visor" && (
+              {userType === "supervisor" && (
                 <option value="prof-task">Prof Task</option>
               )}
               <option value="in-progress">In Progress</option>

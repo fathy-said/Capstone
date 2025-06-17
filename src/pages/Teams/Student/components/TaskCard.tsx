@@ -103,7 +103,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
     >
       <div className="flex items-center mb-1">
         <h3 className="text-sm font-medium flex-grow">{title}</h3>
-        {(status == "prof-task" && userType == "super_visor") ||
+        {(status == "prof-task" && userType == "supervisor") ||
         status !== "prof-task" ? (
           <div className="flex relative" ref={dropdownRef}>
             <button

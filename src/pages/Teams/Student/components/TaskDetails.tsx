@@ -195,7 +195,7 @@ const TaskDetails: React.FC<TaskDetailsProps> = ({ task, onClose, onEdit }) => {
           )}
 
           <div className="flex justify-end space-x-2">
-            {(task.status == "prof-task" && userType == "super_visor") ||
+            {(task.status == "prof-task" && userType == "supervisor") ||
             task.status !== "prof-task" ? (
               <button
                 onClick={onEdit}
