@@ -6,10 +6,12 @@ import { Button } from "../../../components/Ui/Button/Index";
 import { TableControls } from "../../../components/AppTable/components/Controls/Controls";
 import { useNavigate } from "react-router-dom";
 import NewProjectForm from "./components/NewProjectForm";
+import TeamForm from "./components/TeamForm";
 
 function StudentTeams() {
   const navigate = useNavigate();
   const [newProjectModal, setNewProjectModal] = useState(false);
+  const [teamModal, setTeamModal] = useState(false);
 
   return (
     <div className="container py-20 min-h-screen flex flex-col justify-start items-center gap-8">
@@ -37,6 +39,7 @@ function StudentTeams() {
             className=" bg-transparent !gap-2 border-[1px] border-blue-400 text-blue-400 py-2 px-5 "
           />
           <Button
+            onClick={() => setTeamModal(true)}
             text={
               <>
                 <IconAtom name="UserPlus" className="w-5 h-5" /> Invite
@@ -75,6 +78,7 @@ function StudentTeams() {
         <MemberTable />
       </div>
       <NewProjectForm state={newProjectModal} setState={setNewProjectModal} />
+      <TeamForm state={teamModal} setState={setTeamModal} />
     </div>
   );
 }
@@ -119,15 +123,15 @@ function MemberTable() {
       },
       {
         header: "Name",
-        accessorKey: "title",
+        accessorKey: "name",  // Changed from 'title' to 'name'
       },
       {
         header: "Email",
-        accessorKey: "title",
+        accessorKey: "email", // Changed from 'title' to 'email'
       },
       {
         header: "Section",
-        accessorKey: "title",
+        accessorKey: "section", // Changed from 'title' to 'section'
       },
       {
         header: "",

@@ -1,5 +1,6 @@
 import React from "react";
 import TaskColumn from "./TaskColumn";
+import { userTypes } from "../../../../utils/global";
 
 interface Task {
   id: string;
@@ -29,6 +30,8 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
   renderTaskCard,
   addTaskButton,
 }) => {
+  const userType = localStorage.getItem("user_type") as userTypes;
+
   // Group tasks by status
   const tasksByStatus = {
     "my-task": tasks.filter((task) => task.status === "my-task"),
@@ -38,6 +41,10 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
     "in-review": tasks.filter((task) => task.status === "in-review"),
     completed: tasks.filter((task) => task.status === "completed"),
   };
+
+  // Check if user is professor
+  const isProfessor = userType === "supervisor";
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-6 gap-4 h-full">
       <TaskColumn
@@ -54,6 +61,7 @@ const TaskBoard: React.FC<TaskBoardProps> = ({
         titleBgColor="bg-blue-200"
         title="Prof. Task"
         count={tasksByStatus["prof-task"].length}
+        actionButton={isProfessor ? addTaskButton : null}
       >
         {tasksByStatus["prof-task"].map((task) => renderTaskCard(task))}
       </TaskColumn>

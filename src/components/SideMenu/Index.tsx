@@ -57,8 +57,7 @@ type Props = {
 // ];
 export const SideMenu = ({ className = "" }: Props) => {
   const { user } = useAuth();
-  const user_type = user?.user_type as userTypes;
-
+  const user_type = user?.user?.user_type as userTypes;
   const { sideMenuToggle } = useUtils();
   const { sideMenuIsOpen } = useUtils(
     ({ sideMenuIsOpen }: UseUtilsInterface) => ({
