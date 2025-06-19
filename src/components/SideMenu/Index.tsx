@@ -9,7 +9,6 @@ import { Button } from "../Ui/Button/Index";
 import "./main.css";
 import IconAtom from "../IconAtom/Icon-Atom";
 import { icons } from "lucide-react";
-import { useAuth } from "../../store/auth";
 import { useMemo } from "react";
 import { userTypes } from "../../utils/global";
 
@@ -17,54 +16,23 @@ type Props = {
   className?: string;
 };
 
-// const pages = [
-//   {
-//     isLocked: false,
-//     accordion: false,
-//     route: "/student/dashboard",
-//     icon: "LayoutDashboard",
-//     title: "Dashboard",
-//     permission: "",
-//     subPages: [],
-//   },
-//   {
-//     isLocked: false,
-//     accordion: false,
-//     route: "/student/projects",
-//     icon: "FolderKanban",
-//     title: "projects",
-//     permission: "",
-//     subPages: [],
-//   },
-//   {
-//     isLocked: false,
-//     accordion: false,
-//     route: "/student/archive",
-//     icon: "ArchiveRestore",
-//     title: "Archive",
-//     permission: "",
-//     subPages: [],
-//   },
-//   {
-//     isLocked: false,
-//     accordion: false,
-//     route: "/student/teams",
-//     icon: "Users",
-//     title: "Teams",
-//     permission: "",
-//     subPages: [],
-//   },
-// ];
 export const SideMenu = ({ className = "" }: Props) => {
-  const { user } = useAuth();
-  const user_type = user?.user_type as userTypes;
-
+  const userType = localStorage.getItem("user_type") as userTypes;
   const { sideMenuToggle } = useUtils();
   const { sideMenuIsOpen } = useUtils(
     ({ sideMenuIsOpen }: UseUtilsInterface) => ({
       sideMenuIsOpen,
     })
   );
+  const adminUserPage = {
+    isLocked: false,
+    accordion: false,
+    route: `/${userType}/users`,
+    icon: "user-round-cog",
+    title: "users",
+    permission: "",
+    subPages: [],
+  };
 
   const { logout } = useLogout();
 
@@ -87,7 +55,7 @@ export const SideMenu = ({ className = "" }: Props) => {
       {
         isLocked: false,
         accordion: false,
-        route: `/${user_type}/projects`,
+        route: `/${userType}/projects`,
         icon: "FolderKanban",
         title: "projects",
         permission: "",
@@ -96,7 +64,7 @@ export const SideMenu = ({ className = "" }: Props) => {
       {
         isLocked: false,
         accordion: false,
-        route: `/${user_type}/archive`,
+        route: `/${userType}/archive`,
         icon: "ArchiveRestore",
         title: "Archive",
         permission: "",
@@ -105,14 +73,14 @@ export const SideMenu = ({ className = "" }: Props) => {
       {
         isLocked: false,
         accordion: false,
-        route: `/${user_type}/teams`,
+        route: `/${userType}/teams`,
         icon: "Users",
         title: "Teams",
         permission: "",
         subPages: [],
       },
     ];
-  }, [user_type]);
+  }, [userType]);
 
   return (
     <>
@@ -199,6 +167,14 @@ export const SideMenu = ({ className = "" }: Props) => {
                     );
                   }
                 })}
+              {userType === "admin" && (
+                <HandlePageRoute
+                  route={adminUserPage?.route}
+                  icon={adminUserPage?.icon}
+                  title={adminUserPage?.title}
+                  permission={adminUserPage?.permission}
+                />
+              )}
             </div>
           </div>
           <div className="py-4 border-t  w-full">

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import TaskCard from "./components/TaskCard";
-import TaskBoard from "./components/TaskBoard";
-import TaskForm from "./components/TaskForm";
-import TaskDetails from "./components/TaskDetails";
-import TaskUpdateForm from "./components/TaskUpdateForm";
+import TaskCard from "../Student/components/TaskCard";
+import TaskBoard from "../Student/components/TaskBoard";
+import TaskForm from "../Student/components/TaskForm";
+import TaskDetails from "../Student/components/TaskDetails";
+import TaskUpdateForm from "../Student/components/TaskUpdateForm";
 import IconAtom from "../../../components/IconAtom/Icon-Atom";
 
 interface Task {
@@ -11,6 +11,8 @@ interface Task {
   title: string;
   description: string;
   dueDate: string;
+  startDate: string;
+  endDate: string;
   assignedUsers?: { id: number; avatar: string }[];
   status:
     | "my-task"
@@ -19,8 +21,6 @@ interface Task {
     | "in-progress"
     | "in-review"
     | "completed";
-  startDate: string;
-  endDate: string;
 }
 
 function TasksPage() {
@@ -38,19 +38,19 @@ function TasksPage() {
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
-      status: "my-task",
       startDate: "2025/02/24",
       endDate: "2025/02/24",
+      status: "my-task",
     },
     {
       id: "2",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
       status: "prof-task",
-      startDate: "2025/02/24",
-      endDate: "2025/02/24",
       assignedUsers: [
         { id: 1, avatar: "https://i.pravatar.cc/150?img=1" },
         { id: 2, avatar: "https://i.pravatar.cc/150?img=2" },
@@ -166,6 +166,7 @@ function TasksPage() {
       setSelectedTask(task);
     }
   };
+
   const handleUpdateDetails = (taskId: string) => {
     // Find the task with the given ID
     const task = tasks.find((task) => task.id === taskId);
@@ -183,6 +184,8 @@ function TasksPage() {
       title?: string;
       description?: string;
       dueDate?: string;
+      startDate?: string;
+      endDate?: string;
       status?:
         | "my-task"
         | "prof-task"
@@ -228,7 +231,9 @@ function TasksPage() {
 
   const handleSubmitTask = (newTask: {
     title: string;
-    dueDate: string;
+    dueDate?: string;
+    startDate: string;
+    endDate: string;
     description: string;
     attachments?: File[];
   }) => {
@@ -240,9 +245,9 @@ function TasksPage() {
       id: taskId,
       title: newTask.title,
       description: newTask.description,
-      dueDate: newTask.dueDate,
-      startDate: newTask.dueDate,
-      endDate: newTask.dueDate,
+      dueDate: newTask.dueDate || newTask.endDate, // For backward compatibility
+      startDate: newTask.startDate,
+      endDate: newTask.endDate,
       status: "my-task", // New tasks start in 'my-task' column
     };
 
@@ -263,20 +268,21 @@ function TasksPage() {
     </button>
   );
 
-  const renderTaskCard = (task: Task) => (
+  const renderTaskCard = (task: Task, isUpdate: boolean = true) => (
     <TaskCard
       key={task.id}
       title={task.title}
       description={task.description}
       dueDate={task.dueDate}
+      startDate={task.startDate}
+      endDate={task.endDate}
       assignedUsers={task.assignedUsers}
       status={task.status}
       onMoreDetails={() => handleMoreDetails(task.id)}
       onUpload={() => handleUpload(task.id)}
+      isUpdate={isUpdate}
       onReview={() => handleReview(task.id)}
       onUpdate={() => handleUpdateDetails(task.id)} // Open the task details modal for updating
-      startDate={task.startDate}
-      endDate={task.endDate}
     />
   );
 
@@ -295,10 +301,7 @@ function TasksPage() {
 
       {/* Task Form Modal */}
       {isTaskFormOpen && (
-        <TaskForm
-          onSubmit={handleSubmitTask as any}
-          onCancel={handleCancelTaskForm}
-        />
+        <TaskForm onSubmit={handleSubmitTask} onCancel={handleCancelTaskForm} />
       )}
 
       {/* Task Details or Update Modal */}
@@ -318,6 +321,7 @@ function TasksPage() {
             setSelectedTask(null);
           }}
           onUpdate={(taskId, updatedTask) => {
+            console.log("Updated task:", updatedTask);
             handleUpdateTask(taskId, updatedTask);
             setIsEditing(false);
           }}
