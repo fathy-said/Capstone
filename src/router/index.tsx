@@ -17,7 +17,7 @@ import ArchiveRoutes from "../pages/Archive/route.tsx";
 import ProjectRoutes from "../pages/Project/route.tsx";
 import TeamsRoutes from "../pages/Teams/route.tsx";
 import DashboardRoutes from "../pages/Dashboard/route.tsx";
-
+import UsersRoutes from "../pages/users/route.tsx";
 /**
  * Routes
  */
@@ -58,6 +58,10 @@ const routesTree = () => {
         {
           path: ":userType/teams",
           children: TeamsRoutes(),
+        },
+        {
+          path: ":userType/users",
+          children: UsersRoutes(),
         },
       ],
     },
