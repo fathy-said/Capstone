@@ -120,30 +120,24 @@ function MemberTable() {
       {
         header: "ID",
         accessorKey: "id",
+        cell: ({ row }) => <span>{row.index + 1}</span>,
       },
       {
         header: "Name",
-        accessorKey: "name",  // Changed from 'title' to 'name'
+        accessorKey: "title", // Changed from 'title' to 'name'
       },
       {
         header: "Email",
         accessorKey: "email", // Changed from 'title' to 'email'
+        cell: () => <span>test1@gmail.com</span>,
       },
       {
         header: "Section",
         accessorKey: "section", // Changed from 'title' to 'section'
-      },
-      {
-        header: "",
-        accessorKey: "controls",
-        cell: (props) => {
-          return (
-            <TableControls value={props?.original} isView baseUrl="/projects" />
-          );
-        },
+        cell: () => <span>Section 1</span>,
       },
     ],
-    []
+    [posts]
   );
 
   useEffect(() => {
@@ -164,10 +158,11 @@ function MemberTable() {
     }
     getData();
   }, []);
+  console.log("posts", posts);
   return (
     <>
       <AppTable
-        data={posts}
+        data={posts.slice(0, 10)}
         columns={columns}
         loading={false}
         className="mt-10 w-full"

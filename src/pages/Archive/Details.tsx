@@ -86,15 +86,15 @@ function MemberTable() {
         header: "Section",
         accessorKey: "title",
       },
-      {
-        header: "",
-        accessorKey: "controls",
-        cell: (props) => {
-          return (
-            <TableControls value={props?.original} isView baseUrl="/projects" />
-          );
-        },
-      },
+      // {
+      //   header: "",
+      //   accessorKey: "controls",
+      //   cell: (props) => {
+      //     return (
+      //       <TableControls value={props?.original} isView baseUrl="/projects" />
+      //     );
+      //   },
+      // },
     ],
     []
   );
@@ -120,7 +120,7 @@ function MemberTable() {
   return (
     <>
       <AppTable
-        data={posts}
+        data={posts.slice(0, 10)}
         columns={columns}
         loading={false}
         className="mt-10 w-full"
