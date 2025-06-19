@@ -3,6 +3,7 @@ import { useUtils } from "../../store/utils";
 import { SvgIcon } from "../SvgIcon/Index";
 
 import "./main.css";
+import { Bot } from "lucide-react";
 
 export default () => {
   const { sideMenuToggle } = useUtils();
@@ -23,8 +24,8 @@ export default () => {
           />
         </div>
         <div className="header-left flex gap-x-5">
-          <NavLink to={"/settings/project-settings"}>
-            <SvgIcon name="setting" className="header-icon" />
+          <NavLink to={"/chat"}>
+            <Bot className="text-gray-400" />
           </NavLink>
           <SvgIcon name="bell" className="header-icon" />
         </div>

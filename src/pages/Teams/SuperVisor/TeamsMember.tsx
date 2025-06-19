@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { TableControls } from "../../../components/AppTable/components/Controls/Controls";
 import { AppTable } from "../../../components/AppTable/Index";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../../components/Ui/Button/Index";

@@ -26,6 +26,7 @@ import UsersRoutes from "../pages/users/route.tsx";
  * Error Page
  */
 import { PageErrorElement } from "../components/Errors/Page/Index";
+import ChatPage from "../pages/chat/ChatPage.tsx";
 
 const routesTree = () => {
   return createBrowserRouter([
@@ -62,6 +63,10 @@ const routesTree = () => {
         {
           path: ":userType/users",
           children: UsersRoutes(),
+        },
+        {
+          path: "/chat",
+          element: <ChatPage />,
         },
       ],
     },

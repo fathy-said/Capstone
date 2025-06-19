@@ -3,7 +3,6 @@ import { AppTable } from "../../../components/AppTable/Index";
 import IconAtom from "../../../components/IconAtom/Icon-Atom";
 import { Avatar } from "../../../components/Ui/Avatar/Index";
 import { Button } from "../../../components/Ui/Button/Index";
-import { TableControls } from "../../../components/AppTable/components/Controls/Controls";
 import { useNavigate } from "react-router-dom";
 import NewProjectForm from "./components/NewProjectForm";
 import TeamForm from "./components/TeamForm";
@@ -158,7 +157,6 @@ function MemberTable() {
     }
     getData();
   }, []);
-  console.log("posts", posts);
   return (
     <>
       <AppTable

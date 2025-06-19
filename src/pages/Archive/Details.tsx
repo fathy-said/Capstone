@@ -1,5 +1,4 @@
 import { useEffect, useMemo, useState } from "react";
-import { TableControls } from "../../components/AppTable/components/Controls/Controls";
 import { AppTable } from "../../components/AppTable/Index";
 import { Avatar } from "../../components/Ui/Avatar/Index";
 

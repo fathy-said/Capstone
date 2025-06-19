@@ -1,21 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
-import Select from 'react-select';
-import { create } from 'zustand';
-import ReactApexChart from 'react-apexcharts';
-import { 
-  Users, 
-  GraduationCap, 
-  FolderOpen, 
-  TrendingUp, 
-  Calendar,
-  Award,
-  RefreshCw,
-  Filter,
-  BarChart3,
-  PieChart,
-  Settings
-} from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import Select from "react-select";
+import { create } from "zustand";
+import ReactApexChart from "react-apexcharts";
+import { RefreshCw } from "lucide-react";
 
 // Zustand store for admin dashboard state
 interface AdminDashboardStore {
@@ -29,7 +17,7 @@ interface AdminDashboardStore {
 
 const useAdminDashboardStore = create<AdminDashboardStore>((set) => ({
   selectedTeams: [],
-  dateRange: 'all',
+  dateRange: "all",
   refreshCount: 0,
   setSelectedTeams: (teams) => set({ selectedTeams: teams }),
   setDateRange: (range) => set({ dateRange: range }),
@@ -123,8 +111,15 @@ const mockData = {
 
 const AdminDashboard: React.FC = () => {
   const { control } = useForm();
-  const { selectedTeams, dateRange, refreshCount, setSelectedTeams, setDateRange, refresh } = useAdminDashboardStore();
-  
+  const {
+    selectedTeams,
+    dateRange,
+    refreshCount,
+    setSelectedTeams,
+    setDateRange,
+    refresh,
+  } = useAdminDashboardStore();
+
   const [loading, setLoading] = useState(false);
 
   // Filter options
@@ -134,11 +129,11 @@ const AdminDashboard: React.FC = () => {
   }));
 
   const dateRangeOptions = [
-    { value: 'all', label: 'All Time' },
-    { value: 'thisWeek', label: 'This Week' },
-    { value: 'thisMonth', label: 'This Month' },
-    { value: 'lastMonth', label: 'Last Month' },
-    { value: 'thisQuarter', label: 'This Quarter' },
+    { value: "all", label: "All Time" },
+    { value: "thisWeek", label: "This Week" },
+    { value: "thisMonth", label: "This Month" },
+    { value: "lastMonth", label: "Last Month" },
+    { value: "thisQuarter", label: "This Quarter" },
   ];
 
   // Simulate data fetching
@@ -151,215 +146,200 @@ const AdminDashboard: React.FC = () => {
   // Chart configurations
   const studentsPerTeamOptions = {
     chart: {
-      type: 'bar' as const,
+      type: "bar" as const,
       height: 350,
       toolbar: { show: false },
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '60%',
+        columnWidth: "60%",
         borderRadius: 4,
       },
     },
     dataLabels: { enabled: false },
     xaxis: {
-      categories: mockData.studentsPerTeam.map(item => item.teamId.toString()),
-      title: { text: 'Team ID' },
+      categories: mockData.studentsPerTeam.map((item) =>
+        item.teamId.toString()
+      ),
+      title: { text: "Team ID" },
     },
     yaxis: {
-      title: { text: 'Number of Students' },
+      title: { text: "Number of Students" },
       max: 12,
     },
-    colors: ['#8B5CF6'],
+    colors: ["#8B5CF6"],
     title: {
-      text: 'Number of Students Per Team',
-      align: 'center' as const,
+      text: "Number of Students Per Team",
+      align: "center" as const,
       style: {
-        fontSize: '16px',
-        fontWeight: 'bold',
-        color: '#1F2937'
-      }
+        fontSize: "16px",
+        fontWeight: "bold",
+        color: "#1F2937",
+      },
     },
     grid: {
       show: true,
       strokeDashArray: 3,
-      borderColor: '#E5E7EB',
+      borderColor: "#E5E7EB",
     },
   };
 
   const teamProgressOptions = {
     chart: {
-      type: 'bar' as const,
+      type: "bar" as const,
       height: 350,
       toolbar: { show: false },
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '60%',
+        columnWidth: "60%",
         borderRadius: 4,
       },
     },
     dataLabels: { enabled: false },
     xaxis: {
-      categories: mockData.teamProgress.map(item => item.teamId.toString()),
-      title: { text: 'Team ID' },
+      categories: mockData.teamProgress.map((item) => item.teamId.toString()),
+      title: { text: "Team ID" },
     },
     yaxis: {
-      title: { text: 'Completion Rate' },
+      title: { text: "Completion Rate" },
       max: 100,
     },
-    colors: ['#10B981'],
+    colors: ["#10B981"],
     title: {
-      text: 'Team Progress',
-      align: 'center' as const,
+      text: "Team Progress",
+      align: "center" as const,
       style: {
-        fontSize: '16px',
-        fontWeight: 'bold',
-        color: '#1F2937'
-      }
+        fontSize: "16px",
+        fontWeight: "bold",
+        color: "#1F2937",
+      },
     },
     grid: {
       show: true,
       strokeDashArray: 3,
-      borderColor: '#E5E7EB',
+      borderColor: "#E5E7EB",
     },
   };
 
   const meetingFrequencyOptions = {
     chart: {
-      type: 'bar' as const,
+      type: "bar" as const,
       height: 350,
       toolbar: { show: false },
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '60%',
+        columnWidth: "60%",
         borderRadius: 4,
       },
     },
     dataLabels: { enabled: false },
     xaxis: {
-      categories: mockData.meetingFrequency.map(item => item.teamId.toString()),
-      title: { text: 'Team ID' },
+      categories: mockData.meetingFrequency.map((item) =>
+        item.teamId.toString()
+      ),
+      title: { text: "Team ID" },
     },
     yaxis: {
-      title: { text: 'Number of Meetings' },
+      title: { text: "Number of Meetings" },
       max: 12,
     },
-    colors: ['#3B82F6'],
+    colors: ["#3B82F6"],
     title: {
-      text: 'Meeting Frequency Per Team',
-      align: 'center' as const,
+      text: "Meeting Frequency Per Team",
+      align: "center" as const,
       style: {
-        fontSize: '16px',
-        fontWeight: 'bold',
-        color: '#1F2937'
-      }
+        fontSize: "16px",
+        fontWeight: "bold",
+        color: "#1F2937",
+      },
     },
     grid: {
       show: true,
       strokeDashArray: 3,
-      borderColor: '#E5E7EB',
+      borderColor: "#E5E7EB",
     },
   };
 
   const topStudentsOptions = {
     chart: {
-      type: 'bar' as const,
+      type: "bar" as const,
       height: 350,
       toolbar: { show: false },
     },
     plotOptions: {
       bar: {
         horizontal: false,
-        columnWidth: '60%',
+        columnWidth: "60%",
         borderRadius: 4,
       },
     },
     dataLabels: { enabled: false },
     xaxis: {
-      categories: mockData.topStudents.map(item => item.studentId.toString()),
-      title: { text: 'Student ID' },
+      categories: mockData.topStudents.map((item) => item.studentId.toString()),
+      title: { text: "Student ID" },
     },
     yaxis: {
-      title: { text: 'Number of Completed Tasks' },
+      title: { text: "Number of Completed Tasks" },
       max: 5,
     },
-    colors: ['#10B981'],
+    colors: ["#10B981"],
     title: {
-      text: 'Top 10 Students by Task Contributions',
-      align: 'center' as const,
+      text: "Top 10 Students by Task Contributions",
+      align: "center" as const,
       style: {
-        fontSize: '16px',
-        fontWeight: 'bold',
-        color: '#1F2937'
-      }
+        fontSize: "16px",
+        fontWeight: "bold",
+        color: "#1F2937",
+      },
     },
     grid: {
       show: true,
       strokeDashArray: 3,
-      borderColor: '#E5E7EB',
+      borderColor: "#E5E7EB",
     },
   };
 
   // Chart series
-  const studentsPerTeamSeries = [{
-    name: 'Students',
-    data: mockData.studentsPerTeam.map(item => item.students),
-  }];
+  const studentsPerTeamSeries = [
+    {
+      name: "Students",
+      data: mockData.studentsPerTeam.map((item) => item.students),
+    },
+  ];
 
-  const teamProgressSeries = [{
-    name: 'Progress %',
-    data: mockData.teamProgress.map(item => item.progress),
-  }];
+  const teamProgressSeries = [
+    {
+      name: "Progress %",
+      data: mockData.teamProgress.map((item) => item.progress),
+    },
+  ];
 
-  const meetingFrequencySeries = [{
-    name: 'Meetings',
-    data: mockData.meetingFrequency.map(item => item.meetings),
-  }];
+  const meetingFrequencySeries = [
+    {
+      name: "Meetings",
+      data: mockData.meetingFrequency.map((item) => item.meetings),
+    },
+  ];
 
-  const topStudentsSeries = [{
-    name: 'Completed Tasks',
-    data: mockData.topStudents.map(item => item.tasks),
-  }];
-
-  // Overview Card Component
-  const OverviewCard = ({ 
-    title, 
-    value, 
-    icon: Icon, 
-    color, 
-    bgColor 
-  }: {
-    title: string;
-    value: string | number;
-    icon: any;
-    color: string;
-    bgColor: string;
-  }) => (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-sm font-medium text-gray-600 mb-1">{title}</p>
-          <p className="text-3xl font-bold text-white">{value}</p>
-        </div>
-        <div className={`w-12 h-12 ${bgColor} rounded-lg flex items-center justify-center`}>
-          <Icon className={`w-6 h-6 ${color}`} />
-        </div>
-      </div>
-    </div>
-  );
+  const topStudentsSeries = [
+    {
+      name: "Completed Tasks",
+      data: mockData.topStudents.map((item) => item.tasks),
+    },
+  ];
 
   // Donut Chart Component
-  const DonutChart = ({ 
-    title, 
-    total, 
-    data, 
-    colors, 
-    labels 
+  const DonutChart = ({
+    title,
+    total,
+    data,
+    colors,
+    labels,
   }: {
     title: string;
     total: number;
@@ -369,7 +349,7 @@ const AdminDashboard: React.FC = () => {
   }) => {
     const options = {
       chart: {
-        type: 'donut' as const,
+        type: "donut" as const,
         height: 200,
       },
       labels,
@@ -383,7 +363,7 @@ const AdminDashboard: React.FC = () => {
       plotOptions: {
         pie: {
           donut: {
-            size: '70%',
+            size: "70%",
           },
         },
       },
@@ -408,8 +388,8 @@ const AdminDashboard: React.FC = () => {
             <div className="space-y-2">
               {labels.map((label, index) => (
                 <div key={index} className="flex items-center text-sm">
-                  <div 
-                    className="w-3 h-3 rounded-full mr-2" 
+                  <div
+                    className="w-3 h-3 rounded-full mr-2"
                     style={{ backgroundColor: colors[index] }}
                   />
                   <span className="text-gray-600">{label}</span>
@@ -430,10 +410,15 @@ const AdminDashboard: React.FC = () => {
         <div className="mb-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
-              <p className="text-gray-600">Comprehensive overview of teams, students, and project statistics</p>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">
+                Admin Dashboard
+              </h1>
+              <p className="text-gray-600">
+                Comprehensive overview of teams, students, and project
+                statistics
+              </p>
             </div>
-            
+
             {/* Filters */}
             <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
               <div className="w-full sm:w-64">
@@ -449,18 +434,20 @@ const AdminDashboard: React.FC = () => {
                       className="text-sm"
                       onChange={(selected) => {
                         field.onChange(selected);
-                        setSelectedTeams(selected?.map(s => s.value) || []);
+                        setSelectedTeams(selected?.map((s) => s.value) || []);
                       }}
                     />
                   )}
                 />
               </div>
-              
+
               <div className="w-full sm:w-48">
                 <Controller
                   name="dateRange"
                   control={control}
-                  defaultValue={dateRangeOptions.find(opt => opt.value === dateRange)}
+                  defaultValue={dateRangeOptions.find(
+                    (opt) => opt.value === dateRange
+                  )}
                   render={({ field }) => (
                     <Select
                       {...field}
@@ -469,19 +456,21 @@ const AdminDashboard: React.FC = () => {
                       className="text-sm"
                       onChange={(selected) => {
                         field.onChange(selected);
-                        setDateRange(selected?.value || 'all');
+                        setDateRange(selected?.value || "all");
                       }}
                     />
                   )}
                 />
               </div>
-              
+
               <button
                 onClick={refresh}
                 disabled={loading}
                 className="flex items-center justify-center gap-2 px-4 py-2 bg-[#42A5f5] hover:bg-[3994e4] text-white rounded-lg transition-colors disabled:opacity-50"
               >
-                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                <RefreshCw
+                  className={`w-4 h-4 ${loading ? "animate-spin" : ""}`}
+                />
                 Refresh
               </button>
             </div>
@@ -491,30 +480,46 @@ const AdminDashboard: React.FC = () => {
         {/* Statistics Overview Cards */}
         <div className="mb-8">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h2 className="text-xl font-bold text-gray-900 mb-6 text-center">Statistics Overview</h2>
+            <h2 className="text-xl font-bold text-gray-900 mb-6 text-center">
+              Statistics Overview
+            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               <div className="bg-[#42A5f5]  rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-white mb-1">{mockData.overviewStats.numberOfTeams}</div>
+                <div className="text-2xl font-bold text-white mb-1">
+                  {mockData.overviewStats.numberOfTeams}
+                </div>
                 <div className="text-sm text-blue-100">Number of Teams</div>
               </div>
               <div className="bg-[#42A5f5]  rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-white mb-1">{mockData.overviewStats.numberOfStudents}</div>
+                <div className="text-2xl font-bold text-white mb-1">
+                  {mockData.overviewStats.numberOfStudents}
+                </div>
                 <div className="text-sm text-blue-100">Number of Students</div>
               </div>
               <div className="bg-[#42A5f5]  rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-white mb-1">{mockData.overviewStats.numberOfProjects}</div>
+                <div className="text-2xl font-bold text-white mb-1">
+                  {mockData.overviewStats.numberOfProjects}
+                </div>
                 <div className="text-sm text-blue-100">Number of Projects</div>
               </div>
               <div className="bg-[#42A5f5]  rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-white mb-1">{mockData.overviewStats.progressPerTeam}%</div>
+                <div className="text-2xl font-bold text-white mb-1">
+                  {mockData.overviewStats.progressPerTeam}%
+                </div>
                 <div className="text-sm text-blue-100">Progress per Team</div>
               </div>
               <div className="bg-[#42A5f5]  rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-white mb-1">{mockData.overviewStats.meetingFrequency}</div>
-                <div className="text-sm text-blue-100">Meeting Frequency by Team</div>
+                <div className="text-2xl font-bold text-white mb-1">
+                  {mockData.overviewStats.meetingFrequency}
+                </div>
+                <div className="text-sm text-blue-100">
+                  Meeting Frequency by Team
+                </div>
               </div>
               <div className="bg-[#42A5f5]  rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-white mb-1">Top {mockData.overviewStats.topStudents}</div>
+                <div className="text-2xl font-bold text-white mb-1">
+                  Top {mockData.overviewStats.topStudents}
+                </div>
                 <div className="text-sm text-blue-100">Students</div>
               </div>
             </div>
@@ -546,17 +551,23 @@ const AdminDashboard: React.FC = () => {
             <DonutChart
               title="Total Students"
               total={mockData.studentAssignment.total}
-              data={[mockData.studentAssignment.assigned, mockData.studentAssignment.unassigned]}
-              colors={['#3B82F6', '#E5E7EB']}
-              labels={['Assigned Students', 'Unassigned Students']}
+              data={[
+                mockData.studentAssignment.assigned,
+                mockData.studentAssignment.unassigned,
+              ]}
+              colors={["#3B82F6", "#E5E7EB"]}
+              labels={["Assigned Students", "Unassigned Students"]}
             />
-            
+
             <DonutChart
               title="Total Projects"
               total={mockData.projectDistribution.total}
-              data={[mockData.projectDistribution.collegeProjects, mockData.projectDistribution.studentProjects]}
-              colors={['#3B82F6', '#8B5CF6']}
-              labels={['College Projects', 'Students Projects']}
+              data={[
+                mockData.projectDistribution.collegeProjects,
+                mockData.projectDistribution.studentProjects,
+              ]}
+              colors={["#3B82F6", "#8B5CF6"]}
+              labels={["College Projects", "Students Projects"]}
             />
           </div>
         </div>

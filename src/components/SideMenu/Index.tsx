@@ -28,8 +28,8 @@ export const SideMenu = ({ className = "" }: Props) => {
     isLocked: false,
     accordion: false,
     route: `/${userType}/users`,
-    icon: "user-round-cog",
-    title: "users",
+    icon: "UserRoundCog",
+    title: "Users",
     permission: "",
     subPages: [],
   };
@@ -183,7 +183,7 @@ export const SideMenu = ({ className = "" }: Props) => {
               className="text-base text-blue-500 font-semibold rounded-md bg-transparent hover:bg-gray-100 hover:text-blue-600 p-3 w-full"
               text={
                 <p className="flex justify-between items-center w-full">
-                  تسجيل الخروج
+                  Logout
                   <SvgIcon name="log-out" className="fill-current w-5 h-5" />
                 </p>
               }

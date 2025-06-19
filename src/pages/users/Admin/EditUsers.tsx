@@ -4,8 +4,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { SvgIcon } from "../../../components/SvgIcon/Index";
 import { Button } from "../../../components/Ui/Button/Index";
 import { TextInput } from "../../../components/FormInputs/TextInput/Index";
-import { SelectInput } from "../../../components/FormInputs/SelectInput/Index";
-import { OptionInterface } from "../../../components/FormInputs/SelectInput/Index";
 
 function EditUsers() {
   const navigate = useNavigate();
@@ -28,19 +26,6 @@ function EditUsers() {
       status: "",
     },
   });
-
-  // Role options for select field
-  const roleOptions: OptionInterface[] = [
-    { label: "Admin", value: "admin" },
-    { label: "User", value: "user" },
-    { label: "Supervisor", value: "supervisor" },
-  ];
-
-  // Status options for select field
-  const statusOptions: OptionInterface[] = [
-    { label: "Active", value: "active" },
-    { label: "Inactive", value: "inactive" },
-  ];
 
   useEffect(() => {
     if (!userId) return;
