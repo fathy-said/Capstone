@@ -37,3 +37,5 @@ const axiosInstance = (baseUrl: string) => {
 };
 
 export const $api = axiosInstance(import.meta.env.VITE_API_BASE_URL);
+
+export const $api2 = axiosInstance(import.meta.env.VITE_API_BASE_URL2);
