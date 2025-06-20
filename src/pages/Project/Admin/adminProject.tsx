@@ -1,5 +1,9 @@
+
+
 const adminProject = () => {
-  return <div>adminProject</div>;
+  return (
+    <div>adminProject</div>
+  )
 };
 
-export default adminProject;
+export default adminProject
