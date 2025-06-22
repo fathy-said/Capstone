@@ -17,6 +17,8 @@ const axiosInstance = (baseUrl: string) => {
 
     const token = localStorage.getItem("token");
     if (token) config.headers.Authorization = "Bearer " + token;
+    // if (token) config.headers["auth-token"] = "Bearer " + token;
+
     return config;
   });
 
@@ -35,3 +37,5 @@ const axiosInstance = (baseUrl: string) => {
 };
 
 export const $api = axiosInstance(import.meta.env.VITE_API_BASE_URL);
+
+export const $api2 = axiosInstance(import.meta.env.VITE_API_BASE_URL2);

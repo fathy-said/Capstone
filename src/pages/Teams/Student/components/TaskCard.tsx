@@ -1,10 +1,13 @@
 import React, { useState, useRef, useEffect } from "react";
-import { format } from "date-fns";
+import { format, parse, isValid } from "date-fns";
+import { userTypes } from "../../../../utils/global";
 
 interface TaskCardProps {
   title: string;
   description: string;
   dueDate: string;
+  startDate: string;
+  endDate: string;
   assignedUsers?: { id: number; avatar: string }[];
   status:
     | "my-task"
@@ -18,6 +21,7 @@ interface TaskCardProps {
   onReview?: () => void;
   onUpdate?: () => void;
   highlighted?: boolean;
+  isUpdate?: boolean;
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({
@@ -27,31 +31,70 @@ const TaskCard: React.FC<TaskCardProps> = ({
   assignedUsers = [],
   status,
   onMoreDetails,
-  onUpload,
-  onReview,
   onUpdate,
   highlighted = false,
+  startDate,
+  endDate,
 }) => {
+  // Helper function to format date safely
+
+  const formatDate = (dateString: string) => {
+    if (!dateString) return "Not set";
+
+    // Try to parse the date in different formats
+    try {
+      // Check if the date is in DD/MM/YYYY format (our new format)
+      if (dateString.includes("/")) {
+        const parts = dateString.split("/");
+        if (parts.length === 3) {
+          // Detect if it's in DD/MM/YYYY format
+          if (parts[0].length === 2 && parseInt(parts[0]) <= 31) {
+            // Parse as DD/MM/YYYY
+            const parsedDate = parse(dateString, "dd/MM/yyyy", new Date());
+            if (isValid(parsedDate)) {
+              return format(parsedDate, "MM/dd/yyyy");
+            }
+          }
+        }
+      }
+
+      // Try other formats
+      const date = new Date(dateString);
+      if (isValid(date)) {
+        return format(date, "MM/dd/yyyy");
+      }
+
+      // If all parsing attempts fail
+      return dateString;
+    } catch (error) {
+      console.error("Date parsing error:", error);
+      return dateString; // Return the original string if parsing fails
+    }
+  };
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  
+  const userType = localStorage.getItem("user_type") as userTypes;
   const toggleDropdown = () => {
     setShowDropdown(!showDropdown);
   };
-  
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setShowDropdown(false);
       }
     };
-    
-    document.addEventListener('mousedown', handleClickOutside);
+
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
+
   return (
     <div
       className={`bg-white rounded-lg p-4 shadow-sm mb-3 ${
@@ -60,9 +103,10 @@ const TaskCard: React.FC<TaskCardProps> = ({
     >
       <div className="flex items-center mb-1">
         <h3 className="text-sm font-medium flex-grow">{title}</h3>
-        {status !== "my-task" && status !== "prof-task" && (
+        {(status == "prof-task" && userType == "supervisor") ||
+        status !== "prof-task" ? (
           <div className="flex relative" ref={dropdownRef}>
-            <button 
+            <button
               className="text-gray-500 ml-2 hover:text-gray-700"
               onClick={toggleDropdown}
             >
@@ -87,7 +131,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
                 />
               </svg>
             </button>
-            
+
             {showDropdown && (
               <div className="absolute right-0 top-6 mt-2 w-32 bg-white rounded-md shadow-lg z-10 border border-gray-200">
                 <ul className="py-1">
@@ -103,15 +147,17 @@ const TaskCard: React.FC<TaskCardProps> = ({
               </div>
             )}
           </div>
-        )}
+        ) : null}
       </div>
 
       <p className="text-xs text-gray-600 mb-3">{description}</p>
 
       {status === "my-task" || status === "prof-task" ? (
         <>
-          <div className="flex items-center text-xs text-gray-500 mb-2">
-            <span>Due Date: {format(new Date(dueDate), "MM/dd/yyyy")}</span>
+          <div className="flex items-center text-xs text-gray-500 mb-2 gap-4">
+            <span>{startDate && `Start Date: ${formatDate(startDate)}`}</span>
+
+            <span>{endDate && `End Date: ${formatDate(endDate)}`}</span>
           </div>
           <button
             onClick={onMoreDetails}
@@ -147,19 +193,17 @@ const TaskCard: React.FC<TaskCardProps> = ({
               </div>
             )}
 
-          <div className="flex justify-between items-center">
+          <div className="flex justify-start flex-col items-start">
             <span className="text-xs text-gray-500">
-              Due Date: {format(new Date(dueDate), "MM/dd/yyyy")}
+              Due Date: {formatDate(dueDate)}
             </span>
-
-            {status === "to-do" || status === "completed" ? (
-              <button
-                onClick={onMoreDetails}
-                className="text-xs text-blue-600 hover:text-blue-800"
-              >
-                More Details
-              </button>
-            ) : status === "in-progress" ? (
+            <button
+              onClick={onMoreDetails}
+              className="text-xs text-blue-600 hover:text-blue-800"
+            >
+              More Details
+            </button>
+            {/* {status === "in-progress" ? (
               <button
                 onClick={onUpload}
                 className="text-xs bg-blue-600 hover:bg-blue-700 text-white py-1 px-3 rounded"
@@ -173,7 +217,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
               >
                 Review
               </button>
-            ) : null}
+            ) : null} */}
           </div>
         </>
       )}

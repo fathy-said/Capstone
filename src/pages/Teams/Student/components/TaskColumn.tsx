@@ -30,7 +30,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
   };
 
   return (
-    <div className={`flex flex-col rounded-lg h-full ${getBgColor()} p-3`}>
+    <div className={`flex flex-col rounded-lg h-full bg ${getBgColor()} p-3`}>
       <div className={`flex items-center p-3 ${titleBgColor} mb-3 rounded-md`}>
         <div className="flex items-center flex-grow">
           {icon && <span className="mr-2">{icon}</span>}

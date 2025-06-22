@@ -19,6 +19,8 @@ interface Task {
     | "in-progress"
     | "in-review"
     | "completed";
+  startDate: string;
+  endDate: string;
 }
 
 function TasksPage() {
@@ -37,6 +39,8 @@ function TasksPage() {
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
       status: "my-task",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
     },
     {
       id: "2",
@@ -45,6 +49,8 @@ function TasksPage() {
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
       status: "prof-task",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       assignedUsers: [
         { id: 1, avatar: "https://i.pravatar.cc/150?img=1" },
         { id: 2, avatar: "https://i.pravatar.cc/150?img=2" },
@@ -54,6 +60,8 @@ function TasksPage() {
     {
       id: "3",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -67,6 +75,8 @@ function TasksPage() {
     {
       id: "4",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -80,6 +90,8 @@ function TasksPage() {
     {
       id: "5",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -93,6 +105,8 @@ function TasksPage() {
     {
       id: "6",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -106,6 +120,8 @@ function TasksPage() {
     {
       id: "7",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -114,6 +130,8 @@ function TasksPage() {
     {
       id: "8",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -127,6 +145,8 @@ function TasksPage() {
     {
       id: "9",
       title: "wireframe",
+      startDate: "2025/02/24",
+      endDate: "2025/02/24",
       description:
         "Brainstorming brings team members'diverse experience into play. brainstorming brings team members'diverse experience into play.",
       dueDate: "2025/02/24",
@@ -221,6 +241,8 @@ function TasksPage() {
       title: newTask.title,
       description: newTask.description,
       dueDate: newTask.dueDate,
+      startDate: newTask.dueDate,
+      endDate: newTask.dueDate,
       status: "my-task", // New tasks start in 'my-task' column
     };
 
@@ -253,6 +275,8 @@ function TasksPage() {
       onUpload={() => handleUpload(task.id)}
       onReview={() => handleReview(task.id)}
       onUpdate={() => handleUpdateDetails(task.id)} // Open the task details modal for updating
+      startDate={task.startDate}
+      endDate={task.endDate}
     />
   );
 
@@ -271,7 +295,10 @@ function TasksPage() {
 
       {/* Task Form Modal */}
       {isTaskFormOpen && (
-        <TaskForm onSubmit={handleSubmitTask} onCancel={handleCancelTaskForm} />
+        <TaskForm
+          onSubmit={handleSubmitTask as any}
+          onCancel={handleCancelTaskForm}
+        />
       )}
 
       {/* Task Details or Update Modal */}

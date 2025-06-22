@@ -173,20 +173,13 @@ export const AppTable = ({
           <div className="appTable-pagination-controls">
             <button
               type="button"
-              onClick={() => table.firstPage()}
-              disabled={!table.getCanPreviousPage()}
+              onClick={() => table.lastPage()}
+              disabled={!table.getCanNextPage()}
             >
               <SvgIcon
-                name="chevron-right-double"
+                name="chevron-left-double"
                 className="fill-current w-5 h-5"
               />
-            </button>
-            <button
-              type="button"
-              onClick={() => table.previousPage()}
-              disabled={!table.getCanPreviousPage()}
-            >
-              <SvgIcon name="chevron-right" className="fill-current w-5 h-5" />
             </button>
             <button
               type="button"
@@ -197,11 +190,19 @@ export const AppTable = ({
             </button>
             <button
               type="button"
-              onClick={() => table.lastPage()}
-              disabled={!table.getCanNextPage()}
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <SvgIcon name="chevron-right" className="fill-current w-5 h-5" />
+            </button>
+
+            <button
+              type="button"
+              onClick={() => table.firstPage()}
+              disabled={!table.getCanPreviousPage()}
             >
               <SvgIcon
-                name="chevron-left-double"
+                name="chevron-right-double"
                 className="fill-current w-5 h-5"
               />
             </button>

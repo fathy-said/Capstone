@@ -9,7 +9,7 @@ function DashboardRoutes() {
   const teamsRoute =
     userType == "student"
       ? studentRoute
-      : userType == "super_visor"
+      : userType == "supervisor"
       ? superVisorRoute
       : userType == "admin"
       ? adminRoute

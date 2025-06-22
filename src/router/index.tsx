@@ -17,7 +17,7 @@ import ArchiveRoutes from "../pages/Archive/route.tsx";
 import ProjectRoutes from "../pages/Project/route.tsx";
 import TeamsRoutes from "../pages/Teams/route.tsx";
 import DashboardRoutes from "../pages/Dashboard/route.tsx";
-
+import UsersRoutes from "../pages/users/route.tsx";
 /**
  * Routes
  */
@@ -26,6 +26,7 @@ import DashboardRoutes from "../pages/Dashboard/route.tsx";
  * Error Page
  */
 import { PageErrorElement } from "../components/Errors/Page/Index";
+import ChatPage from "../pages/chat/ChatPage.tsx";
 
 const routesTree = () => {
   return createBrowserRouter([
@@ -58,6 +59,14 @@ const routesTree = () => {
         {
           path: ":userType/teams",
           children: TeamsRoutes(),
+        },
+        {
+          path: ":userType/users",
+          children: UsersRoutes(),
+        },
+        {
+          path: "/chat",
+          element: <ChatPage />,
         },
       ],
     },
